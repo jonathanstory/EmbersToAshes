@@ -15,7 +15,6 @@ public class CharacterMovementSimple : MonoBehaviour
             controls = new PlayerControls();
             // Tell the "gameplay" action map that we want to get told about
             // when actions get triggered.
-            controls.Player.SetCallbacks(this);
         }
         controls.Player.Enable();
     }
@@ -26,13 +25,7 @@ public class CharacterMovementSimple : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    private void LateUpdate()
+    public void OnMove()
     {
 
     }
