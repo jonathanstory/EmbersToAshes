@@ -7,6 +7,7 @@ public class CharacterMovementSimple : MonoBehaviour
 
     public float moveSpeed = 5;
     PlayerControls controls;
+    private Vector3 movement;
 
     public void OnEnable()
     {
@@ -25,8 +26,17 @@ public class CharacterMovementSimple : MonoBehaviour
         
     }
 
-    public void OnMove()
+    private void LateUpdate()
     {
+        if (movement != null)
+        {
+            transform.position += new Vector3(movement.x * moveSpeed * Time.deltaTime, 0, movement.y * moveSpeed * Time.deltaTime);
+        }
+    }
+
+    public void OnMove(InputValue value)
+    {
+        movement = value.Get<Vector2>();
 
     }
 
