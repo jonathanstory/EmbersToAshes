@@ -9,12 +9,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
       propertyPath: m_LocalPosition.z
@@ -54,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 1e791062fb5f4454089740a06dc333ea, type: 2}
     - target: {fileID: 919132149155446097, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
       propertyPath: m_Name
-      value: rake
+      value: Rake_Model_P
       objectReference: {fileID: 0}
     - target: {fileID: 3651596713874458822, guid: 115556d07e0ca604ca59a938d3b64f48, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

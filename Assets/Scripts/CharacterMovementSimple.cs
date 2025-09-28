@@ -10,6 +10,7 @@ public class CharacterMovementSimple : MonoBehaviour
     private Vector3 movement;
 
     private Quaternion rotation;
+    private bool isPaused;
 
     public void OnEnable()
     {
@@ -25,7 +26,7 @@ public class CharacterMovementSimple : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        isPaused = false;
     }
 
     private void Update()
@@ -38,9 +39,9 @@ public class CharacterMovementSimple : MonoBehaviour
         {
             transform.position += new Vector3(movement.x * moveSpeed * Time.deltaTime, 0, movement.y * moveSpeed * Time.deltaTime);
 
-            Quaternion rotation = Quaternion.LookRotation(movement, Vector3.up);
+            //Quaternion rotation = Quaternion.LookRotation(movement, Vector3.up);
 
-            transform.rotation = new Quaternion(0,rotation.y,0,0);
+            //transform.rotation = new Quaternion(0,rotation.y,0,0);
         }
 
 
@@ -53,6 +54,16 @@ public class CharacterMovementSimple : MonoBehaviour
 
     public void OnPause()
     {
+        if(!isPaused)
+        {
+            Time.timeScale = 0;
+            isPaused = true;
+        }
+        else
+        {
+            Time.timeScale = 1;
+            isPaused = false;
+        }
 
     }
 
