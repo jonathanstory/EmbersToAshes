@@ -24,8 +24,6 @@ public class CharacterMovementSimple : MonoBehaviour
 
     private Rigidbody rb;
 
-    Quaternion lookDir;
-
 
     public void OnEnable()
     {
@@ -68,6 +66,7 @@ public class CharacterMovementSimple : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(movementVector, Vector3.up);
 
             rb.MoveRotation(Quaternion.Slerp(rb.rotation, rotation, Time.fixedDeltaTime * rotationSpeed));
+
         }
     }
 
