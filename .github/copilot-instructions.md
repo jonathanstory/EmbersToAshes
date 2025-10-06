@@ -1,8 +1,14 @@
 <!-- UNITY CODE ASSIST INSTRUCTIONS START -->
 - Project name: EmbersToAshes
 - Unity version: Unity 6000.2.0f1
+- Active scene:
+  - Name: gameplayScene
+  - Tags:
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, Wood, Base
+  - Layers:
+    - Default, TransparentFX, Ignore Raycast, Water, UI
 - Active game object:
-  - Name: Next Button
-  - Tag: Untagged
-  - Layer: UI
+  - Name: MainCharacter
+  - Tag: Player
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
