@@ -1,11 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms;
 
 public class GameManager : MonoBehaviour
 {
-    public int currentWood;
     public float timeSurvived;
 
+    public int localInventoryMax;
+    public int localWood;
+    public int localStone;
+    public int localInventoryCurrent;
+    public int globalInventoryMax;
+    public int globalStone;
+    public int globalWood;
+    public int globalInventoryCurrent;
     public static GameManager Instance { get; private set; }
 
     private void Awake()
@@ -19,7 +27,6 @@ public class GameManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject); // Persist across scene changes
 
-            currentWood = 0;
             timeSurvived = 0;
         }
     }
@@ -30,7 +37,7 @@ public class GameManager : MonoBehaviour
         {
             timeSurvived += Time.deltaTime * 1;
 
-            if(timeSurvived > 60)
+            if (timeSurvived > 60)
             {
                 GameWin();
             }
@@ -46,4 +53,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("winScreen");
     }
+
+    public void InventoryConvert()
+    {
+        if (globalInventoryCurrent < globalInventoryMax)
+        {
+            globalWood += localWood;
+
+            globalStone += localStone;
+        }
+    }
+            
 }

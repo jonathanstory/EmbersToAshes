@@ -96,16 +96,18 @@ public class CharacterMovementSimple : MonoBehaviour
 
         if(other.gameObject.CompareTag("Wood"))
         {
-            GameManager.Instance.currentWood += 1;
+            if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
+            GameManager.Instance.localWood += 1;
+        }
+        if(other.gameObject.CompareTag("Stone"))
+        {
+            if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
+            GameManager.Instance.localStone += 1;
         }
 
         if (other.gameObject.CompareTag("Base"))
         {
-            if (GameManager.Instance.currentWood > 0)
-            {
-                GameManager.Instance.currentWood -= 1;
-                homeBase.GetComponent<FireBehavior>().currentFireLife += 5000;
-            }
+            GameManager.Instance.InventoryConvert(); 
         }
     }
 
