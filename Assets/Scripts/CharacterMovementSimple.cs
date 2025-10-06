@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 public class CharacterMovementSimple : MonoBehaviour
 {
     public int maxPlayerHealth, currentPlayerHealth;
-    public float maxLightIntensity;
     public float maxLightRange;
     public float rotationSpeed;
 
     public Light playerLight;
+    public Light playerLightOrigin;
     public GameObject homeBase;
 
     public float moveSpeed = 5;
@@ -46,10 +46,10 @@ public class CharacterMovementSimple : MonoBehaviour
 
     private void Update()
     {
-        playerLight.intensity = maxLightIntensity * ((float)currentPlayerHealth / (float)maxPlayerHealth);
-        playerLight.range = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
+        playerLight.spotAngle = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
+        playerLightOrigin.intensity = maxLightRange *((float)currentPlayerHealth / (float)maxPlayerHealth);
 
-        if(currentPlayerHealth <= 0)
+        if (currentPlayerHealth <= 0)
         {
             GameManager.Instance.GameOver();
         }
