@@ -37,4 +37,13 @@ public class FireBehavior : MonoBehaviour
             GameManager.Instance.GameOver();
         }
     }
+
+    public void FuelFire()
+    {
+        if(GameManager.Instance.localWood > 0)
+        {
+            currentFireLife += 250;
+            GameManager.Instance.localWood -= 1;
+        }
+    }
 }

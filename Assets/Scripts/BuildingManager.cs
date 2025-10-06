@@ -42,13 +42,13 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    public void InstantiateBuilding(int buildingIndex, int woodCost)
+    public void InstantiateBuilding(int buildingIndex)
     {
-        if (GameManager.Instance.globalWood > woodCost)
+        if (GameManager.Instance.globalWood > buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost)
         { 
             Instantiate(buildings[buildingIndex], this.transform.position, baseDir);
             Destroy(gameObject);
-            GameManager.Instance.globalWood -= woodCost;
+            GameManager.Instance.globalWood -= buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost;
         }
     }
 
