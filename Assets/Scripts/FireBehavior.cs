@@ -8,14 +8,17 @@ public class FireBehavior : MonoBehaviour
     public float rateOfDecay;
     public float maxRange;
 
+    public float originIntensity;
+
     public Light fireLight;
+    public Light shadowLight;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        maxFireLife = 10000;
+        maxFireLife = 1000;
         currentFireLife = maxFireLife;
-        maxRange = 50;
+        fireLight.spotAngle = maxRange;
     }
 
     // Update is called once per frame
@@ -25,8 +28,9 @@ public class FireBehavior : MonoBehaviour
 
         currentFireLife -= Time.deltaTime * rateOfDecay;
 
-        fireLight.intensity = currentFireLife;
-        fireLight.range = maxRange * (currentFireLife / maxFireLife);
+        fireLight.spotAngle = maxRange * (currentFireLife/maxFireLife);
+
+        shadowLight.intensity = originIntensity * (currentFireLife / maxFireLife);
 
         if(currentFireLife <= 0)
         {

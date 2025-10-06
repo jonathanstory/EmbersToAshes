@@ -22,6 +22,8 @@ public class CharacterMovementSimple : MonoBehaviour
     private bool isPaused;
     private bool isInvincible;
 
+    private Rigidbody rb;
+
 
     public void OnEnable()
     {
@@ -39,6 +41,7 @@ public class CharacterMovementSimple : MonoBehaviour
     {
         isPaused = false;
         homeBase = GameObject.Find("campfire");
+        rb = GetComponent<Rigidbody>(); 
     }
 
     private void Update()
@@ -62,7 +65,8 @@ public class CharacterMovementSimple : MonoBehaviour
 
             Quaternion rotation = Quaternion.LookRotation(movementVector, Vector3.up);
 
-            transform.rotation = Quaternion.Slerp(this.rotation, rotation, rotationSpeed);
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, rotation, Time.fixedDeltaTime * rotationSpeed));
+
         }
     }
 
