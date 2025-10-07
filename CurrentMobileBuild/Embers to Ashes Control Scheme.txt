@@ -1,0 +1,5 @@
+Control Scheme:
+
+UI Navigation: Tap Arrows/Swipe to navigate thru menu options, tap to select
+
+Gameplay: Drag virtual joystick to move, tap top-right icon to pause
