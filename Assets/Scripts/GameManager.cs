@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().name == "gameplayScene")
         {
             timeSurvived += Time.deltaTime * 1;
+            Debug.LogWarning("Local inventory max is " + localInventoryMax);
+            Debug.LogWarning("Local inventory current is " + localInventoryCurrent);
 
             if (timeSurvived > 60)
             {

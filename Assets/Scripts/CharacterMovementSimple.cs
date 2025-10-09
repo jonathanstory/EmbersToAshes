@@ -100,8 +100,16 @@ public class CharacterMovementSimple : MonoBehaviour
 
         if(other.gameObject.CompareTag("Wood"))
         {
+            Debug.LogWarning("This is wood");
             if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
-            GameManager.Instance.localWood += 1;
+            {
+                Debug.LogWarning("Wood Collected");
+                GameManager.Instance.localWood += 1;
+                
+            }
+            
+            
+            
         }
         if(other.gameObject.CompareTag("Stone"))
         {

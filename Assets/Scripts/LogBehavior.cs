@@ -18,6 +18,7 @@ public class LogBehavior : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
+           
             Destroy(gameObject);
         }
     }
