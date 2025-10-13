@@ -8,6 +8,7 @@ public class CharacterMovementSimple : MonoBehaviour
     public int maxPlayerHealth, currentPlayerHealth;
     public float maxLightRange;
     public float rotationSpeed;
+    public bool canDash = false;
 
     public Light playerLight;
     public Light playerLightOrigin;
@@ -24,6 +25,14 @@ public class CharacterMovementSimple : MonoBehaviour
 
     private Rigidbody rb;
 
+    private PlayerInput playerInput;
+    private InputAction moving;
+
+    public AudioSource audioSource;
+    public AudioClip[] clips;
+    private int stepCount = 0;
+    private float stepTimer = 0f;
+    private float stepDelay = .4f;
 
     public void OnEnable()
     {
@@ -42,6 +51,12 @@ public class CharacterMovementSimple : MonoBehaviour
         isPaused = false;
         homeBase = GameObject.Find("campfire");
         rb = GetComponent<Rigidbody>(); 
+    }
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        moving = playerInput.actions["Move"];
     }
 
     private void Update()
@@ -63,16 +78,46 @@ public class CharacterMovementSimple : MonoBehaviour
 
             transform.position += movementVector;
 
-            Quaternion rotation = Quaternion.LookRotation(movementVector, Vector3.up);
+            if (moving.IsPressed())
+            {
+                rb.MoveRotation(Quaternion.Slerp(rb.rotation, rotation, Time.fixedDeltaTime * rotationSpeed));
+                stepTimer += Time.deltaTime;
+                if(stepTimer > stepDelay)
+                {
+                    PlayFootstep();
+                    stepTimer = 0f;
+                }
+            }
+        }
+    }
 
-            rb.MoveRotation(Quaternion.Slerp(rb.rotation, rotation, Time.fixedDeltaTime * rotationSpeed));
-
+    private void PlayFootstep()
+    {
+        if (stepCount == 0)
+        {
+            stepCount = 1;
+            audioSource.PlayOneShot(clips[0]);
+        }
+        else
+        {
+            stepCount = 0;
+            audioSource.PlayOneShot(clips[1]);
         }
     }
 
     public void OnMove(InputValue value)
     {
         movement = value.Get<Vector2>();
+        rotation = Quaternion.LookRotation(new Vector3(movement.x, 0, movement.y), Vector3.up);
+    }
+
+    public void OnSprint()
+    {
+        if (canDash)
+        {
+            canDash = false;
+            StartCoroutine(DashTimer());
+        }
     }
 
     public void OnPause()
@@ -130,4 +175,12 @@ public class CharacterMovementSimple : MonoBehaviour
         isInvincible = false;
     }
 
+    private IEnumerator DashTimer()
+    {
+        moveSpeed *= 2;
+        yield return new WaitForSeconds(0.3f);
+        moveSpeed /= 2;
+        yield return new WaitForSeconds(invincibilityTime);
+        canDash = true;
+    }
 }

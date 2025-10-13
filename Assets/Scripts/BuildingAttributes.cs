@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BuildingAttributes : MonoBehaviour
@@ -7,6 +8,8 @@ public class BuildingAttributes : MonoBehaviour
 
     public bool affectsResource;
     public bool affectsFireRate;
+    public bool affectsHealth;
+    public bool dashEffect;
 
     public int effectPower;
 
@@ -18,22 +21,28 @@ public class BuildingAttributes : MonoBehaviour
 
     private void Awake()
     {
-        if(affectsFireRate)
+        if (affectsFireRate)
         {
             GameObject playerBase = GameObject.FindGameObjectWithTag("Base");
 
             playerBase.GetComponent<FireBehavior>().rateOfDecay -= effectPower;
         }
 
-        if(affectsResource)
+        if (affectsResource)
         {
             GameManager.Instance.globalInventoryMax += effectPower;
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (affectsHealth)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<CharacterMovementSimple>().maxPlayerHealth += effectPower;
+        }
+
+        if (dashEffect)
+        {
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.GetComponent<CharacterMovementSimple>().canDash = true;
+        }
     }
 }

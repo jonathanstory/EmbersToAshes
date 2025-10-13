@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class RakeBehavior : MonoBehaviour
 {
     [Header("Patrol Settings")]
     public float patrolRadius = 10f;      // How far around the enemy to pick patrol points
@@ -16,8 +17,15 @@ public class EnemyAI : MonoBehaviour
     private bool isChasing = false;
     private float waitTimer = 0f;
 
+    private Transform playerBase;
+    public float avoidBaseRange = 5;
+    private bool withinBase = false;
+    private bool canAct = true;
+
     void Start()
     {
+        playerBase = GameObject.FindGameObjectWithTag("Base").transform;
+
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -27,31 +35,41 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToBase = Vector3.Distance(transform.position, playerBase.transform.position);
 
-        if (isChasing)
+        if ((canAct))
         {
-            // When player escapes
-            if (distanceToPlayer > loseSightRange)
+            if (isChasing)
             {
-                isChasing = false;
-                SetRandomDestination();
+                // When player escapes
+                if (distanceToPlayer > loseSightRange)
+                {
+                    isChasing = false;
+                    SetRandomDestination();
+                }
+                else
+                {
+                    // Continue chasing player
+                    agent.SetDestination(player.position);
+                }
             }
             else
             {
-                // Continue chasing player
-                agent.SetDestination(player.position);
+                // Player enters chase range
+                if (distanceToPlayer <= sightRange && !withinBase)
+                {
+                    isChasing = true;
+                }
+                else
+                {
+                    Patrol();
+                }
             }
-        }
-        else
-        {
-            // Player enters chase range
-            if (distanceToPlayer <= sightRange)
+
+            if (distanceToBase <= avoidBaseRange)
             {
-                isChasing = true;
-            }
-            else
-            {
-                Patrol();
+                withinBase = true;
+                RunAway();
             }
         }
     }
@@ -79,6 +97,21 @@ public class EnemyAI : MonoBehaviour
         {
             agent.SetDestination(hit.position);
         }
+    }
+
+    private void RunAway()
+    {
+        canAct = false;
+        Vector3 directionToRun = (transform.position - playerBase.position).normalized;
+        Vector3 runVector = directionToRun * 20;
+        agent.SetDestination(runVector);
+        StartCoroutine(RunDeath());
+    }
+
+    private IEnumerator RunDeath()
+    {
+        yield return new WaitForSeconds(5);
+        canAct = true;
     }
 
     void OnDrawGizmosSelected()

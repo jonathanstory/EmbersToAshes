@@ -1,7 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class LogBehavior : MonoBehaviour
 {
+    public AudioSource audioSource;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -18,7 +21,14 @@ public class LogBehavior : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            StartCoroutine(pickup());
         }
+    }
+
+    private IEnumerator pickup()
+    {
+        audioSource.Play();
+        yield return new WaitForSeconds(audioSource.clip.length);
+        Destroy(gameObject);
     }
 }

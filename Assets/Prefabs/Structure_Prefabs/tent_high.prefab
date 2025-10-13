@@ -179,5 +179,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c820a2020f367ba41ab54ff7bba1e07b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2055655947282062821}
   m_SourcePrefab: {fileID: 100100000, guid: c820a2020f367ba41ab54ff7bba1e07b, type: 3}
+--- !u!1 &5468820391968661431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c820a2020f367ba41ab54ff7bba1e07b, type: 3}
+  m_PrefabInstance: {fileID: 5126309111632847590}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-2055655947282062821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5468820391968661431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eebe71a13a23d04b9f95c3f997cea91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingAttributes
+  woodCost: 4
+  stoneCost: 0
+  affectsResource: 0
+  affectsFireRate: 1
+  affectsHealth: 0
+  dashEffect: 0
+  effectPower: 10

@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class BuildingManager : MonoBehaviour
@@ -9,6 +11,10 @@ public class BuildingManager : MonoBehaviour
 
     private Quaternion baseDir;
     private bool UIActive;
+
+    public AudioClip[] clips;
+
+    public AudioSource audioSource;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,13 +50,24 @@ public class BuildingManager : MonoBehaviour
 
     public void InstantiateBuilding(int buildingIndex)
     {
-        if (GameManager.Instance.globalWood > buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost)
+        if (GameManager.Instance.globalWood >= buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost)
         { 
             Instantiate(buildings[buildingIndex], this.transform.position, baseDir);
-            Destroy(gameObject);
             GameManager.Instance.globalWood -= buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost;
+            StartCoroutine(PlayClips());
         }
     }
 
+    private IEnumerator PlayClips()
+    {
+        foreach (AudioClip clip in clips)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+
+            yield return new WaitForSeconds(clip.length);
+        }
+        Destroy(gameObject);
+    }
 }
  

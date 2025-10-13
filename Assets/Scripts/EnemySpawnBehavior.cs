@@ -33,10 +33,14 @@ public class EnemySpawnBehavior : MonoBehaviour
 
         if (spawnedEnemy != null)
         {
-            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy.transform.position) > 25)
+            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy.transform.position) > 40)
             {
                 DespawnEnemy(spawnedEnemy);
             }
+        }
+        else
+        {
+            canSpawn = true;
         }
     }
 
@@ -48,7 +52,7 @@ public class EnemySpawnBehavior : MonoBehaviour
     private IEnumerator spawnTimer()
     {
         yield return new WaitForSeconds(spawnDelay);
-        spawnPos = GetRandomPositionAround(playerLoc.transform.position, 20);
+        spawnPos = GetRandomPositionAround(playerLoc.transform.position, 30);
     }
 
     public Vector3 GetRandomPositionAround(Vector3 target, float distance)

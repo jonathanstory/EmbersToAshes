@@ -36,6 +36,8 @@ public class FireBehavior : MonoBehaviour
         {
             GameManager.Instance.GameOver();
         }
+
+        Debug.Log(currentFireLife);
     }
 
     public void FuelFire()

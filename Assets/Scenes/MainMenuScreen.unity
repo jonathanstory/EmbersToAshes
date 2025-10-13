@@ -1381,6 +1381,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 500a51141c8ccb04b9ef2b9d0edfe8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  timeSurvived: 0
+  localInventoryMax: 0
+  localWood: 0
+  localStone: 0
+  localInventoryCurrent: 0
+  globalInventoryMax: 0
+  globalStone: 0
+  globalWood: 0
+  globalInventoryCurrent: 0
+  currentGlobalWood: {fileID: 0}
+  currentGlobalStone: {fileID: 0}
 --- !u!114 &802774084
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Wood
   - Base
+  - WoodUI
+  - StoneUI
   layers:
   - Default
   - TransparentFX
