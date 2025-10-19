@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class EnemySpawnBehavior : MonoBehaviour
 {
-    public GameObject enemyToSpawnPrefab;
+    public GameObject[] enemies;
     public GameObject playerLoc;
     public GameObject baseLoc;
-    private GameObject spawnedEnemy;
+    private GameObject[] spawnedEnemy;
 
     private Vector3 spawnPos;
     private Vector3 checkValidSpawn;
@@ -14,6 +14,8 @@ public class EnemySpawnBehavior : MonoBehaviour
     private Vector3 offset;
 
     public bool canSpawn;
+    public bool canSpawnRake = false;
+    public bool canSpawnMothman = false;
 
     public static EnemySpawnBehavior Instance { get; private set; }
 
@@ -27,28 +29,43 @@ public class EnemySpawnBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        if (canSpawn && GameManager.Instance.timeSurvived >= 15) // Time since round start in seconds
+        if(GameManager.Instance.timeSurvived >= 15)
         {
-            spawnEnemy();
+            canSpawnRake = true;
+        }
+
+        if(GameManager.Instance.timeSurvived >= 30)
+        {
+            canSpawnMothman = true;
+        }
+
+        if (canSpawn && canSpawnRake) // Time since round start in seconds
+        {
+            spawnRake();
             canSpawn = false;
         }
 
 
         if (spawnedEnemy != null)
         {
-            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy.transform.position) > 30)
+            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy[0].transform.position) > 30)
             {
-                DespawnEnemy(spawnedEnemy);
+                DespawnEnemy(spawnedEnemy[0]);
             }
         }
     }
 
-    private void spawnEnemy()
+    private void spawnRake()
     {
-        StartCoroutine(spawnTimer());
+        StartCoroutine(spawnTimer(0));
     }
 
-    private IEnumerator spawnTimer()
+    private void spawnMothman()
+    {
+        StartCoroutine(spawnTimer(1));
+    }
+
+    private IEnumerator spawnTimer(int enemyType)
     {
         yield return new WaitForSeconds(spawnDelay);
 
@@ -60,7 +77,7 @@ public class EnemySpawnBehavior : MonoBehaviour
         }
 
         spawnPos = checkValidSpawn;
-        spawnedEnemy = Instantiate(enemyToSpawnPrefab, spawnPos, Quaternion.identity);
+        spawnedEnemy[enemyType] = Instantiate(enemies[enemyType], spawnPos, Quaternion.identity);
     }
 
     public Vector3 GetRandomPositionAround(Vector3 target, float distance)

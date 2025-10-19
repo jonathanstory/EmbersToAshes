@@ -66,7 +66,9 @@ public class CharacterMovementSimple : MonoBehaviour
     {
         playerLight.spotAngle = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
         playerLightOrigin.intensity = maxLightRange *((float)currentPlayerHealth / (float)maxPlayerHealth);
+
         lightBar.SetHealth(currentPlayerHealth);
+
         if (currentPlayerHealth <= 0)
         {
             GameManager.Instance.GameOver();
