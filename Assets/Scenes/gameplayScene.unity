@@ -3026,7 +3026,7 @@ PrefabInstance:
       objectReference: {fileID: 726575896}
     - target: {fileID: 8784211034059828344, guid: 9ae0f22c933130f4b85dbaf4e449eec9, type: 3}
       propertyPath: rateOfDecay
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4102,6 +4102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnBehavior
   enemyToSpawnPrefab: {fileID: 7340118730956943078, guid: cbb32fa8dc6779e43964b87a8d80944b, type: 3}
   playerLoc: {fileID: 2110480285}
+  baseLoc: {fileID: 503984580}
   canSpawn: 0
 --- !u!1 &852191024
 GameObject:

@@ -5,13 +5,17 @@ public class EnemySpawnBehavior : MonoBehaviour
 {
     public GameObject enemyToSpawnPrefab;
     public GameObject playerLoc;
+    public GameObject baseLoc;
     private GameObject spawnedEnemy;
 
     private Vector3 spawnPos;
+    private Vector3 checkValidSpawn;
     private int spawnDelay;
     private Vector3 offset;
 
     public bool canSpawn;
+
+    public static EnemySpawnBehavior Instance { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,25 +26,20 @@ public class EnemySpawnBehavior : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { 
         if (canSpawn && GameManager.Instance.timeSurvived >= 15) // Time since round start in seconds
         {
             spawnEnemy();
-            spawnedEnemy = Instantiate(enemyToSpawnPrefab, spawnPos, Quaternion.identity);
             canSpawn = false;
         }
 
 
         if (spawnedEnemy != null)
         {
-            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy.transform.position) > 40)
+            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy.transform.position) > 30)
             {
                 DespawnEnemy(spawnedEnemy);
             }
-        }
-        else
-        {
-            canSpawn = true;
         }
     }
 
@@ -52,7 +51,16 @@ public class EnemySpawnBehavior : MonoBehaviour
     private IEnumerator spawnTimer()
     {
         yield return new WaitForSeconds(spawnDelay);
-        spawnPos = GetRandomPositionAround(playerLoc.transform.position, 30);
+
+        checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 20);
+
+        while(Vector3.Distance(checkValidSpawn, baseLoc.transform.position) < 10)
+        {
+            checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 25);
+        }
+
+        spawnPos = checkValidSpawn;
+        spawnedEnemy = Instantiate(enemyToSpawnPrefab, spawnPos, Quaternion.identity);
     }
 
     public Vector3 GetRandomPositionAround(Vector3 target, float distance)
@@ -64,11 +72,13 @@ public class EnemySpawnBehavior : MonoBehaviour
         float x = Mathf.Cos(angle) * distance;
         float z = Mathf.Sin(angle) * distance;
 
+        Vector3 returnPos = new Vector3(target.x + x, target.y, target.z + z);
+
         // Return world position
-        return new Vector3(target.x + x, target.y, target.z + z);
+        return returnPos;
     }
 
-    private void DespawnEnemy(GameObject enemy)
+    public void DespawnEnemy(GameObject enemy)
     {
         Destroy(enemy);
         spawnedEnemy = null;

@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: rake_rescaled
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90cf45700e1c2ef43a686109715139ac, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3651596713874458822, guid: 90cf45700e1c2ef43a686109715139ac, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -170,3 +174,4 @@ MonoBehaviour:
   waitTimeAtPoint: 2
   sightRange: 5
   loseSightRange: 8
+  avoidBaseRange: 5

@@ -37,6 +37,8 @@ public class RakeBehavior : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         float distanceToBase = Vector3.Distance(transform.position, playerBase.transform.position);
 
+        Debug.Log(canAct);
+
         if ((canAct))
         {
             if (isChasing)
@@ -103,7 +105,7 @@ public class RakeBehavior : MonoBehaviour
     {
         canAct = false;
         Vector3 directionToRun = (transform.position - playerBase.position).normalized;
-        Vector3 runVector = directionToRun * 20;
+        Vector3 runVector = directionToRun * 40;
         agent.SetDestination(runVector);
         StartCoroutine(RunDeath());
     }
@@ -111,7 +113,7 @@ public class RakeBehavior : MonoBehaviour
     private IEnumerator RunDeath()
     {
         yield return new WaitForSeconds(5);
-        canAct = true;
+        EnemySpawnBehavior.Instance.DespawnEnemy(this.gameObject);
     }
 
     void OnDrawGizmosSelected()
