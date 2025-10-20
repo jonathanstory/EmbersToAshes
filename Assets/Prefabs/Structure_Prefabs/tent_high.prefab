@@ -201,10 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eebe71a13a23d04b9f95c3f997cea91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuildingAttributes
-  woodCost: 4
-  stoneCost: 0
+  woodCost: 5
+  stoneCost: 1
   affectsResource: 0
   affectsFireRate: 1
   affectsHealth: 0
   dashEffect: 0
-  effectPower: 10
+  effectPower: 5

@@ -24,9 +24,20 @@ public class PickupSpawner : MonoBehaviour
     {
         if (canSpawn)
         {
+            int randomSpawn = Random.Range(0, 101);
             canSpawn = false;
-            Instantiate(resourcePrefab[0], GetRandomSpawn(), new Quaternion(0, Random.Range(0, 359), 0, 0));
-            spawnResource();
+
+            if(randomSpawn <= 75)
+            {
+                Instantiate(resourcePrefab[0], GetRandomSpawn(), new Quaternion(0, Random.Range(0, 359), 0, 0));
+                spawnResource();
+            }
+            else
+            {
+                Instantiate(resourcePrefab[1], GetRandomSpawn(), new Quaternion(0, Random.Range(0, 359), 0, 0));
+                spawnResource();
+            }
+
         }
     }
 

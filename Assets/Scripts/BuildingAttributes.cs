@@ -31,6 +31,7 @@ public class BuildingAttributes : MonoBehaviour
         if (affectsResource)
         {
             GameManager.Instance.globalInventoryMax += effectPower;
+            GameManager.Instance.localInventoryMax += effectPower;
         }
 
         if (affectsHealth)

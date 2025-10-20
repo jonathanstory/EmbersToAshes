@@ -161,7 +161,9 @@ public class CharacterMovementSimple : MonoBehaviour
 
         if (other.gameObject.CompareTag("Base"))
         {
-            GameManager.Instance.InventoryConvert(); 
+            GameManager.Instance.InventoryConvert();
+            GameManager.Instance.localStone = 0;
+            GameManager.Instance.localWood = 0;
         }
     }
 

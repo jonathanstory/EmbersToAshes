@@ -37,8 +37,6 @@ public class RakeBehavior : MonoBehaviour
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         float distanceToBase = Vector3.Distance(transform.position, playerBase.transform.position);
 
-        Debug.Log(canAct);
-
         if ((canAct))
         {
             if (isChasing)
