@@ -113,7 +113,7 @@ public class RakeBehavior : MonoBehaviour
     private IEnumerator RunDeath()
     {
         yield return new WaitForSeconds(5);
-        EnemySpawnBehavior.Instance.DespawnEnemy(this.gameObject);
+        EnemySpawnBehavior.Instance.DespawnEnemy(0);
     }
 
     void OnDrawGizmosSelected()

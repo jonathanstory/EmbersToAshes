@@ -3447,6 +3447,9 @@ MonoBehaviour:
   - {fileID: 4470219545618276078, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
   playerLoc: {fileID: 2110480285}
   baseLoc: {fileID: 503984580}
+  spawnedEnemy:
+  - {fileID: 0}
+  - {fileID: 0}
   canSpawn: 0
   canSpawnRake: 0
   canSpawnMothman: 0

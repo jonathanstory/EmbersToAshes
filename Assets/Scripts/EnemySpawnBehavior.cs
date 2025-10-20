@@ -6,7 +6,7 @@ public class EnemySpawnBehavior : MonoBehaviour
     public GameObject[] enemies;
     public GameObject playerLoc;
     public GameObject baseLoc;
-    private GameObject[] spawnedEnemy;
+    public GameObject[] spawnedEnemy = new GameObject[2];
 
     private Vector3 spawnPos;
     private Vector3 checkValidSpawn;
@@ -46,11 +46,11 @@ public class EnemySpawnBehavior : MonoBehaviour
         }
 
 
-        if (spawnedEnemy != null)
+        if (spawnedEnemy[0] != null)
         {
             if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy[0].transform.position) > 30)
             {
-                DespawnEnemy(spawnedEnemy[0]);
+                DespawnEnemy(0);
             }
         }
     }
@@ -95,10 +95,10 @@ public class EnemySpawnBehavior : MonoBehaviour
         return returnPos;
     }
 
-    public void DespawnEnemy(GameObject enemy)
+    public void DespawnEnemy(int enemy)
     {
-        Destroy(enemy);
-        spawnedEnemy = null;
+        Destroy(spawnedEnemy[enemy]);
+        spawnedEnemy[enemy] = null;
         canSpawn = true;
     }
 
