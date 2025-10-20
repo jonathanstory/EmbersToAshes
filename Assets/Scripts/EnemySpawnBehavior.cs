@@ -16,6 +16,7 @@ public class EnemySpawnBehavior : MonoBehaviour
     public bool canSpawn;
     public bool canSpawnRake = false;
     public bool canSpawnMothman = false;
+    public bool mothmanSpawned = false;
 
     public static EnemySpawnBehavior Instance { get; private set; }
 
@@ -39,10 +40,16 @@ public class EnemySpawnBehavior : MonoBehaviour
             canSpawnMothman = true;
         }
 
-        if (canSpawn && canSpawnRake) // Time since round start in seconds
+        if(canSpawn && canSpawnRake) // Time since round start in seconds
         {
             spawnRake();
             canSpawn = false;
+        }
+
+        if (canSpawnMothman && !mothmanSpawned)
+        {
+            mothmanSpawned = true;
+            spawnMothman();
         }
 
 
@@ -71,7 +78,7 @@ public class EnemySpawnBehavior : MonoBehaviour
 
         checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 20);
 
-        while(Vector3.Distance(checkValidSpawn, baseLoc.transform.position) < 10)
+        while(Vector3.Distance(checkValidSpawn, baseLoc.transform.position) < 12)
         {
             checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 25);
         }

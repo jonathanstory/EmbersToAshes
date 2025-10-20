@@ -355,24 +355,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   resourceText: {fileID: 0}
---- !u!1 &37662172 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4470219545618276078, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-  m_PrefabInstance: {fileID: 1580232303}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &37662173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 37662172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10da1d57f609ef24c8457769935d7f4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MothmanBehavior
-  objectRenderer: {fileID: 613888320}
 --- !u!1 &46283007
 GameObject:
   m_ObjectHideFlags: 0
@@ -2894,11 +2876,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08bb02b36abd2b04d89890052dd53e4b, type: 3}
---- !u!23 &613888320 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3498913025555724079, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-  m_PrefabInstance: {fileID: 1580232303}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &627344866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3476,7 +3453,7 @@ GameObject:
   - component: {fileID: 797705978}
   m_Layer: 0
   m_Name: EnemyManager
-  m_TagString: Untagged
+  m_TagString: EnemyManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3510,7 +3487,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawnBehavior
   enemies:
   - {fileID: 7340118730956943078, guid: cbb32fa8dc6779e43964b87a8d80944b, type: 3}
-  - {fileID: 4470219545618276078, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
+  - {fileID: 6516036351972657792, guid: 4076da1f6fbbfe34baff13043a5d21c6, type: 3}
   playerLoc: {fileID: 2110480285}
   baseLoc: {fileID: 503984580}
   spawnedEnemy:
@@ -3519,6 +3496,7 @@ MonoBehaviour:
   canSpawn: 0
   canSpawnRake: 0
   canSpawnMothman: 0
+  mothmanSpawned: 0
 --- !u!1001 &843030124
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5899,70 +5877,6 @@ Transform:
   - {fileID: 646797213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1580232303
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2863781678130635811, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.70684814
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -13.34
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3837832497184736340, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4470219545618276078, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      propertyPath: m_Name
-      value: mothman_with_wings
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4470219545618276078, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 37662173}
-  m_SourcePrefab: {fileID: 100100000, guid: e206948e6629d7c4b9af4fbd9336bc98, type: 3}
 --- !u!4 &1598830521 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4782079411380485695, guid: 08bb02b36abd2b04d89890052dd53e4b, type: 3}
@@ -7960,7 +7874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7555127157083230680, guid: 5c91391c742703d4e8c490fc4dc8999f, type: 3}
       propertyPath: maxPlayerHealth
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7555127157083230680, guid: 5c91391c742703d4e8c490fc4dc8999f, type: 3}
       propertyPath: clips.Array.size
@@ -7980,7 +7894,7 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: ef587158a8b1b224db722df1260007bd, type: 3}
     - target: {fileID: 7555127157083230680, guid: 5c91391c742703d4e8c490fc4dc8999f, type: 3}
       propertyPath: currentPlayerHealth
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7559791813858850188, guid: 5c91391c742703d4e8c490fc4dc8999f, type: 3}
       propertyPath: m_Name
@@ -8068,4 +7982,3 @@ SceneRoots:
   - {fileID: 280019851}
   - {fileID: 1680672236}
   - {fileID: 6295629245503634260}
-  - {fileID: 1580232303}

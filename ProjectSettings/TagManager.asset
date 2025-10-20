@@ -11,6 +11,7 @@ TagManager:
   - WoodUI
   - StoneUI
   - Stone
+  - EnemyManager
   layers:
   - Default
   - TransparentFX
