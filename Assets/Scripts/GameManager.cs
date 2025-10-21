@@ -43,19 +43,13 @@ public class GameManager : MonoBehaviour
             currentGlobalWood = GameObject.FindGameObjectWithTag("WoodUI").GetComponent<TextMeshProUGUI>();
             currentGlobalStone = GameObject.FindGameObjectWithTag("StoneUI").GetComponent<TextMeshProUGUI>();
 
-            if (timeSurvived > 60)
-            {
-                GameWin();
-            }
-
-            currentGlobalWood.SetText("x " + globalWood.ToString());
-            currentGlobalStone.SetText("x " + globalStone.ToString());
+            currentGlobalWood.SetText("x " + globalWood.ToString() + "/" + globalInventoryMax);
+            currentGlobalStone.SetText("x " + globalStone.ToString() + "/" + globalInventoryMax);
         }
     }
 
     public void GameOver()
     {
-        ResetGame();
         SceneManager.LoadScene("gameOverScreen");
     }
 

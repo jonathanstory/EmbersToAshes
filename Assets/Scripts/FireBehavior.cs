@@ -13,10 +13,13 @@ public class FireBehavior : MonoBehaviour
     public Light fireLight;
     public Light shadowLight;
 
+    public LightBarScript lightBar; 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         maxFireLife = 1000;
+        lightBar.SetMaxHealth(maxFireLife);
         currentFireLife = maxFireLife;
         fireLight.spotAngle = maxRange;
     }
@@ -27,6 +30,7 @@ public class FireBehavior : MonoBehaviour
         Mathf.Clamp(currentFireLife,0,maxFireLife);
 
         currentFireLife -= Time.deltaTime * rateOfDecay;
+        lightBar.SetHealth(currentFireLife);
 
         fireLight.spotAngle = maxRange * (currentFireLife/maxFireLife);
 
@@ -36,8 +40,6 @@ public class FireBehavior : MonoBehaviour
         {
             GameManager.Instance.GameOver();
         }
-
-        Debug.Log(currentFireLife);
     }
 
     public void FuelFire()

@@ -103,7 +103,7 @@ public class RakeBehavior : MonoBehaviour
     {
         canAct = false;
         Vector3 directionToRun = (transform.position - playerBase.position).normalized;
-        Vector3 runVector = directionToRun * 20;
+        Vector3 runVector = directionToRun * 40;
         agent.SetDestination(runVector);
         StartCoroutine(RunDeath());
     }
@@ -111,7 +111,7 @@ public class RakeBehavior : MonoBehaviour
     private IEnumerator RunDeath()
     {
         yield return new WaitForSeconds(5);
-        canAct = true;
+        EnemySpawnBehavior.Instance.DespawnEnemy(0);
     }
 
     void OnDrawGizmosSelected()

@@ -3,15 +3,22 @@ using UnityEngine;
 
 public class EnemySpawnBehavior : MonoBehaviour
 {
-    public GameObject enemyToSpawnPrefab;
+    public GameObject[] enemies;
     public GameObject playerLoc;
-    private GameObject spawnedEnemy;
+    public GameObject baseLoc;
+    public GameObject[] spawnedEnemy = new GameObject[2];
 
     private Vector3 spawnPos;
+    private Vector3 checkValidSpawn;
     private int spawnDelay;
     private Vector3 offset;
 
     public bool canSpawn;
+    public bool canSpawnRake = false;
+    public bool canSpawnMothman = false;
+    public bool mothmanSpawned = false;
+
+    public static EnemySpawnBehavior Instance { get; private set; }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,37 +29,62 @@ public class EnemySpawnBehavior : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        if (canSpawn && GameManager.Instance.timeSurvived >= 15) // Time since round start in seconds
+    { 
+        if(GameManager.Instance.timeSurvived >= 15)
         {
-            spawnEnemy();
-            spawnedEnemy = Instantiate(enemyToSpawnPrefab, spawnPos, Quaternion.identity);
+            canSpawnRake = true;
+        }
+
+        if(GameManager.Instance.timeSurvived >= 30)
+        {
+            canSpawnMothman = true;
+        }
+
+        if(canSpawn && canSpawnRake) // Time since round start in seconds
+        {
+            spawnRake();
             canSpawn = false;
         }
 
-
-        if (spawnedEnemy != null)
+        if (canSpawnMothman && !mothmanSpawned)
         {
-            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy.transform.position) > 40)
+            mothmanSpawned = true;
+            spawnMothman();
+        }
+
+
+        if (spawnedEnemy[0] != null)
+        {
+            if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy[0].transform.position) > 30)
             {
-                DespawnEnemy(spawnedEnemy);
+                DespawnEnemy(0);
             }
         }
-        else
-        {
-            canSpawn = true;
-        }
     }
 
-    private void spawnEnemy()
+    private void spawnRake()
     {
-        StartCoroutine(spawnTimer());
+        StartCoroutine(spawnTimer(0));
     }
 
-    private IEnumerator spawnTimer()
+    private void spawnMothman()
+    {
+        StartCoroutine(spawnTimer(1));
+    }
+
+    private IEnumerator spawnTimer(int enemyType)
     {
         yield return new WaitForSeconds(spawnDelay);
-        spawnPos = GetRandomPositionAround(playerLoc.transform.position, 30);
+
+        checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 20);
+
+        while(Vector3.Distance(checkValidSpawn, baseLoc.transform.position) < 12)
+        {
+            checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 25);
+        }
+
+        spawnPos = checkValidSpawn;
+        spawnedEnemy[enemyType] = Instantiate(enemies[enemyType], spawnPos, Quaternion.identity);
     }
 
     public Vector3 GetRandomPositionAround(Vector3 target, float distance)
@@ -64,14 +96,16 @@ public class EnemySpawnBehavior : MonoBehaviour
         float x = Mathf.Cos(angle) * distance;
         float z = Mathf.Sin(angle) * distance;
 
+        Vector3 returnPos = new Vector3(target.x + x, target.y, target.z + z);
+
         // Return world position
-        return new Vector3(target.x + x, target.y, target.z + z);
+        return returnPos;
     }
 
-    private void DespawnEnemy(GameObject enemy)
+    public void DespawnEnemy(int enemy)
     {
-        Destroy(enemy);
-        spawnedEnemy = null;
+        Destroy(spawnedEnemy[enemy]);
+        spawnedEnemy[enemy] = null;
         canSpawn = true;
     }
 

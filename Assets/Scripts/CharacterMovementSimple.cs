@@ -16,6 +16,8 @@ public class CharacterMovementSimple : MonoBehaviour
 
     public float moveSpeed = 5;
     public float invincibilityTime = 2.0f;
+
+    public LightBarScript lightBar;
     PlayerControls controls;
     private Vector3 movement;
 
@@ -50,7 +52,8 @@ public class CharacterMovementSimple : MonoBehaviour
     {
         isPaused = false;
         homeBase = GameObject.Find("campfire");
-        rb = GetComponent<Rigidbody>(); 
+        rb = GetComponent<Rigidbody>();
+        lightBar.SetMaxHealth(maxPlayerHealth);
     }
 
     private void Awake()
@@ -63,6 +66,8 @@ public class CharacterMovementSimple : MonoBehaviour
     {
         playerLight.spotAngle = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
         playerLightOrigin.intensity = maxLightRange *((float)currentPlayerHealth / (float)maxPlayerHealth);
+
+        lightBar.SetHealth(currentPlayerHealth);
 
         if (currentPlayerHealth <= 0)
         {
@@ -156,7 +161,9 @@ public class CharacterMovementSimple : MonoBehaviour
 
         if (other.gameObject.CompareTag("Base"))
         {
-            GameManager.Instance.InventoryConvert(); 
+            GameManager.Instance.InventoryConvert();
+            GameManager.Instance.localStone = 0;
+            GameManager.Instance.localWood = 0;
         }
     }
 
