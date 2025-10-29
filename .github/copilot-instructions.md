@@ -4,11 +4,11 @@
 - Active scene:
   - Name: gameplayScene
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, Wood, Base
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, Wood, Base, WoodUI, StoneUI, Stone, EnemyManager
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI
 - Active game object:
-  - Name: MainCharacter
-  - Tag: Player
+  - Name: Rake
+  - Tag: Enemy
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

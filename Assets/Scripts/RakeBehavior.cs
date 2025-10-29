@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -14,20 +13,24 @@ public class RakeBehavior : MonoBehaviour
 
     private NavMeshAgent agent;
     private Transform player;
-    private bool isChasing = false;
-    private float waitTimer = 0f;
+    private Animator animator;
 
-    private Transform playerBase;
-    public float avoidBaseRange = 5;
-    private bool withinBase = false;
-    private bool canAct = true;
+    private bool isChasing = false;
+    private bool isAlerted = false;      // True when responding to mothman's scream
+    private float waitTimer = 0f;
+    private float normalSpeed;
+    private Vector3 alertPosition;
+    private Vector3 patrolPoint;
+    private bool patrolPointSet = false;
 
     void Start()
     {
-        playerBase = GameObject.FindGameObjectWithTag("Base").transform;
-
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (agent != null)
+            normalSpeed = agent.speed;
 
         SetRandomDestination();
     }
@@ -35,42 +38,64 @@ public class RakeBehavior : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-        float distanceToBase = Vector3.Distance(transform.position, playerBase.transform.position);
 
-        if ((canAct))
+        // Chasing logic
+        if (isChasing)
         {
-            if (isChasing)
+            if (distanceToPlayer > loseSightRange)
             {
-                // When player escapes
-                if (distanceToPlayer > loseSightRange)
-                {
-                    isChasing = false;
-                    SetRandomDestination();
-                }
-                else
-                {
-                    // Continue chasing player
-                    agent.SetDestination(player.position);
-                }
+                isChasing = false;
+                SetRandomDestination();
             }
             else
             {
-                // Player enters chase range
-                if (distanceToPlayer <= sightRange && !withinBase)
-                {
-                    isChasing = true;
-                }
-                else
-                {
-                    Patrol();
-                }
+                agent.speed = normalSpeed;
+                agent.SetDestination(player.position);
+            }
+        }
+        // Alerted logic
+        else if (isAlerted)
+        {
+            if (distanceToPlayer <= sightRange)
+            {
+                isChasing = true;
+                isAlerted = false;
+                agent.speed = normalSpeed;
+                return;
             }
 
-            if (distanceToBase <= avoidBaseRange)
+            float distanceToAlertPos = Vector3.Distance(transform.position, alertPosition);
+
+            if (distanceToAlertPos <= agent.stoppingDistance)
             {
-                withinBase = true;
-                RunAway();
+                isAlerted = false;
+                agent.speed = normalSpeed;
+                SetRandomDestination();
             }
+            else
+            {
+                agent.speed = normalSpeed * 2f;
+                agent.SetDestination(alertPosition);
+            }
+        }
+        // Patrol logic
+        else
+        {
+            if (distanceToPlayer <= sightRange)
+            {
+                isChasing = true;
+            }
+            else
+            {
+                Patrol();
+            }
+        }
+
+        // Update walking animation based on agent velocity
+        if (animator != null && agent != null)
+        {
+            float currentSpeed = agent.velocity.magnitude;
+            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime); // smooth transition
         }
     }
 
@@ -92,26 +117,21 @@ public class RakeBehavior : MonoBehaviour
         Vector3 randomDirection = Random.insideUnitSphere * patrolRadius + transform.position;
         NavMeshHit hit;
 
-        // Pick the nearest valid point on the NavMesh
         if (NavMesh.SamplePosition(randomDirection, out hit, patrolRadius, NavMesh.AllAreas))
         {
-            agent.SetDestination(hit.position);
+            patrolPoint = hit.position;
+            patrolPointSet = true;
+            agent.SetDestination(patrolPoint);
         }
     }
 
-    private void RunAway()
+    // Called by Mothman to alert the Rake
+    public void HeardSound(Vector3 soundSource)
     {
-        canAct = false;
-        Vector3 directionToRun = (transform.position - playerBase.position).normalized;
-        Vector3 runVector = directionToRun * 40;
-        agent.SetDestination(runVector);
-        StartCoroutine(RunDeath());
-    }
-
-    private IEnumerator RunDeath()
-    {
-        yield return new WaitForSeconds(5);
-        EnemySpawnBehavior.Instance.DespawnEnemy(0);
+        isAlerted = true;
+        isChasing = false;
+        alertPosition = soundSource;
+        Debug.Log(name + " alerted to scream at position: " + soundSource);
     }
 
     void OnDrawGizmosSelected()

@@ -77,9 +77,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90cf45700e1c2ef43a686109715139ac, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6329913560420178777}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90cf45700e1c2ef43a686109715139ac, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4389570807395350793}
   m_SourcePrefab: {fileID: 100100000, guid: 90cf45700e1c2ef43a686109715139ac, type: 3}
 --- !u!1 &7340118730956943078 stripped
 GameObject:
@@ -158,20 +155,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4389570807395350793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7340118730956943078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76ec15084f2bc0f47b32f6c7265bdfe0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  patrolRadius: 10
-  waitTimeAtPoint: 2
-  sightRange: 5
-  loseSightRange: 8
-  avoidBaseRange: 5
