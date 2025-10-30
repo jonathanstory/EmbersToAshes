@@ -17,6 +17,8 @@ public class EnemySpawnBehavior : MonoBehaviour
     public bool canSpawnRake = false;
     public bool canSpawnMothman = false;
     public bool mothmanSpawned = false;
+    public bool canSpawnScreamer = false;
+    public bool screamerSpawned = false;
 
     public static EnemySpawnBehavior Instance { get; private set; }
 
@@ -40,7 +42,13 @@ public class EnemySpawnBehavior : MonoBehaviour
             canSpawnMothman = true;
         }
 
-        if(canSpawn && canSpawnRake) // Time since round start in seconds
+
+        if (GameManager.Instance.timeSurvived >= 45)
+        {
+            canSpawnScreamer = true;
+        }
+
+        if (canSpawn && canSpawnRake) // Time since round start in seconds
         {
             spawnRake();
             canSpawn = false;
@@ -48,8 +56,14 @@ public class EnemySpawnBehavior : MonoBehaviour
 
         if (canSpawnMothman && !mothmanSpawned)
         {
-            mothmanSpawned = true;
-            spawnMothman();
+            //mothmanSpawned = true;
+            //spawnMothman();
+        }
+
+        if (canSpawnScreamer && !screamerSpawned)
+        {
+            screamerSpawned = true;
+            spawnScreamer();
         }
 
 
@@ -72,15 +86,20 @@ public class EnemySpawnBehavior : MonoBehaviour
         StartCoroutine(spawnTimer(1));
     }
 
+    private void spawnScreamer()
+    {
+        StartCoroutine(spawnTimer(2));
+    }
+
     private IEnumerator spawnTimer(int enemyType)
     {
         yield return new WaitForSeconds(spawnDelay);
 
-        checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 20);
+        checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 25);
 
         while(Vector3.Distance(checkValidSpawn, baseLoc.transform.position) < 12)
         {
-            checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 25);
+            checkValidSpawn = GetRandomPositionAround(playerLoc.transform.position, 30);
         }
 
         spawnPos = checkValidSpawn;
