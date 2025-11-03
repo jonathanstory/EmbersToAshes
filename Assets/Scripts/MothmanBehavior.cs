@@ -42,6 +42,8 @@ public class MothmanBehavior : MonoBehaviour
             enemyManager.GetComponent<EnemySpawnBehavior>().DespawnEnemy(1);
             enemyManager.GetComponent<EnemySpawnBehavior>().mothmanSpawned = false;
         }
+
+        transform.LookAt(player.transform);
     }
 
 }

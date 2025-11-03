@@ -12,6 +12,9 @@ TagManager:
   - StoneUI
   - Stone
   - EnemyManager
+  - BasePos
+  - Rake
+  - WorldUI
   layers:
   - Default
   - TransparentFX

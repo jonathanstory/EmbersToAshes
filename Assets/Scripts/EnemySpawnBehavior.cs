@@ -12,8 +12,9 @@ public class EnemySpawnBehavior : MonoBehaviour
     private Vector3 checkValidSpawn;
     private int spawnDelay;
     private Vector3 offset;
+    public GameObject basePos;
 
-    public bool canSpawn;
+    public bool rakeSpawned = false;
     public bool canSpawnRake = false;
     public bool canSpawnMothman = false;
     public bool mothmanSpawned = false;
@@ -26,7 +27,6 @@ public class EnemySpawnBehavior : MonoBehaviour
     void Start()
     {
         spawnDelay = 10;
-        canSpawn = true;
     }
 
     // Update is called once per frame
@@ -48,16 +48,16 @@ public class EnemySpawnBehavior : MonoBehaviour
             canSpawnScreamer = true;
         }
 
-        if (canSpawn && canSpawnRake) // Time since round start in seconds
+        if (canSpawnRake && !rakeSpawned) // Time since round start in seconds
         {
+            rakeSpawned = true;
             spawnRake();
-            canSpawn = false;
         }
 
         if (canSpawnMothman && !mothmanSpawned)
         {
-            //mothmanSpawned = true;
-            //spawnMothman();
+            mothmanSpawned = true;
+            spawnMothman();
         }
 
         if (canSpawnScreamer && !screamerSpawned)
@@ -72,6 +72,13 @@ public class EnemySpawnBehavior : MonoBehaviour
             if (Vector3.Distance(playerLoc.transform.position, spawnedEnemy[0].transform.position) > 30)
             {
                 DespawnEnemy(0);
+                rakeSpawned = false;
+            }
+
+            if(Vector3.Distance(spawnedEnemy[0].transform.position, basePos.transform.position) < 6)
+            {
+                DespawnEnemy(0);
+                rakeSpawned = false;
             }
         }
     }
@@ -125,7 +132,6 @@ public class EnemySpawnBehavior : MonoBehaviour
     {
         Destroy(spawnedEnemy[enemy]);
         spawnedEnemy[enemy] = null;
-        canSpawn = true;
     }
 
 }

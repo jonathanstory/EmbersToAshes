@@ -151,10 +151,15 @@ public class ScreamerAI : MonoBehaviour
 
         yield return new WaitForSeconds(screamDuration);
 
+        animator.SetBool("Jumping", true);
+
+        yield return new WaitForSeconds(1);
+
         currentFlyPhase = FlyPhase.GoingUp;
         if (animator != null)
             animator.Play(jumpAnim);
     }
+
 
     private Vector3 GetFleeTargetPoint()
     {
@@ -195,6 +200,7 @@ public class ScreamerAI : MonoBehaviour
 
                 if (Mathf.Abs(transform.position.y - flightHeight) < 0.1f)
                 {
+                    animator.SetBool("Jumping", false);
                     currentFlyPhase = FlyPhase.WaitingInAir;
                     StartCoroutine(WaitInAirCoroutine());
                 }
@@ -263,7 +269,7 @@ public class ScreamerAI : MonoBehaviour
 
     private void AlertRake()
     {
-        GameObject rake = GameObject.Find("Rake");
+        GameObject rake = GameObject.FindGameObjectWithTag("Rake");
 
         if (rake != null)
         {

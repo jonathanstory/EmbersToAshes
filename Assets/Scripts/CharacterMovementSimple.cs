@@ -142,7 +142,7 @@ public class CharacterMovementSimple : MonoBehaviour
 
     public void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.CompareTag("Enemy"))
+        if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Rake"))
         {
             if(!isInvincible)
                 currentPlayerHealth -= 1;

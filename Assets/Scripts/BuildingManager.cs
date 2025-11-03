@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BuildingManager : MonoBehaviour
 {
     public GameObject[] buildings;
+    private GameObject[] buildingSpots;
     public GameObject buildingUI;
     public GameObject playerBase;
 

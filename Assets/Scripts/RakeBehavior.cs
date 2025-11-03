@@ -10,6 +10,7 @@ public class RakeBehavior : MonoBehaviour
     [Header("Chase Settings")]
     public float sightRange = 5f;         // Distance to start chasing the player
     public float loseSightRange = 8f;     // Distance to stop chasing the player
+    public float baseAvoidDistance = 10f;
 
     private NavMeshAgent agent;
     private Transform player;
@@ -22,6 +23,7 @@ public class RakeBehavior : MonoBehaviour
     private Vector3 alertPosition;
     private Vector3 patrolPoint;
     private bool patrolPointSet = false;
+    private GameObject basePos;
 
     void Start()
     {
@@ -33,6 +35,7 @@ public class RakeBehavior : MonoBehaviour
             normalSpeed = agent.speed;
 
         SetRandomDestination();
+        basePos = GameObject.FindGameObjectWithTag("BasePos");
     }
 
     void Update()

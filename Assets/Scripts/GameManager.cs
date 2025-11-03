@@ -66,6 +66,9 @@ public class GameManager : MonoBehaviour
             globalWood += localWood;
 
             globalStone += localStone;
+
+            globalWood = Mathf.Clamp(globalWood, 0, globalInventoryMax);
+            globalStone = Mathf.Clamp(globalStone, 0, globalInventoryMax);
         }
     }      
     
