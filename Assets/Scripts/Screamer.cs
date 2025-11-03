@@ -18,10 +18,15 @@ public class ScreamerAI : MonoBehaviour
     public float waitInAirTime = 3f;             // Wait time in the air before flying away
 
     [Header("Audio & Animation")]
-    public AudioClip screamClip;                  // Screech sound
-    public AudioClip landingClip;                 // Landing sound
-    public Animator animator;                     // Mothman's Animator
-    public AudioSource audioSource;               // AudioSource to play the sounds
+    public AudioClip screamClip;
+    public AudioClip landingClip;
+    public AudioSource audioSource;
+
+    public Animator animator;                     // Animator reference
+    public string idleAnim = "Idle";              // Idle animation name
+    public string patrolAnim = "Walk";            // Patrol animation name
+    public string screamAnim = "Scream";          // Scream animation name
+    public string jumpAnim = "Jump";              // Jump/fly animation name
 
     private GameObject player;
     private NavMeshAgent agent;
@@ -33,14 +38,12 @@ public class ScreamerAI : MonoBehaviour
     private bool isFlying = false;
 
     private Vector3 fleeTargetPoint;
-
     private float waitTimer = 0f;
 
-    // Fly phases for smooth flying logic
     private enum FlyPhase
     {
         GoingUp,
-        WaitingInAir,       // NEW phase for waiting after flying up
+        WaitingInAir,
         FlyingAway,
         GoingDown,
         Landed
@@ -67,12 +70,9 @@ public class ScreamerAI : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distanceToPlayer <= detectionRange)
+            if (distanceToPlayer <= detectionRange && !hasScreamed)
             {
-                if (!hasScreamed)
-                {
-                    StartCoroutine(ScreamAndFlyAway());
-                }
+                StartCoroutine(ScreamAndFlyAway());
             }
             else
             {
@@ -88,13 +88,22 @@ public class ScreamerAI : MonoBehaviour
     private void Patrol()
     {
         if (!patrolPointSet)
-        {
             SetRandomPatrolPoint();
-        }
 
         if (agent != null && patrolPointSet)
         {
             agent.SetDestination(patrolPoint);
+
+            // Animate patrol vs idle
+            if (animator != null)
+            {
+                float speedPercent = agent.velocity.magnitude / agent.speed;
+
+                if (speedPercent > 0.1f)
+                    animator.Play(patrolAnim);
+                else
+                    animator.Play(idleAnim);
+            }
 
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.1f)
             {
@@ -126,32 +135,25 @@ public class ScreamerAI : MonoBehaviour
         hasScreamed = true;
         isFlying = true;
 
-        // Stop NavMeshAgent movement
         if (agent != null)
         {
             agent.isStopped = true;
             agent.enabled = false;
         }
 
-        // Play scream sound and animation
         if (audioSource != null && screamClip != null)
-        {
-            audioSource.PlayOneShot(screamClip, 0.3f); // volume lowered
-        }
+            audioSource.PlayOneShot(screamClip, 0.3f);
 
         if (animator != null)
-        {
-            animator.SetTrigger("Scream");
-        }
+            animator.Play(screamAnim);
 
-        // Alert the Rake
         AlertRake();
 
-        // Wait for scream duration before flying
         yield return new WaitForSeconds(screamDuration);
 
-        // Start flying up phase
         currentFlyPhase = FlyPhase.GoingUp;
+        if (animator != null)
+            animator.Play(jumpAnim);
     }
 
     private Vector3 GetFleeTargetPoint()
@@ -176,9 +178,7 @@ public class ScreamerAI : MonoBehaviour
         }
 
         if (attempts == maxAttempts)
-        {
             fleePoint = transform.position + Vector3.forward * patrolRadius;
-        }
 
         return fleePoint;
     }
@@ -211,9 +211,7 @@ public class ScreamerAI : MonoBehaviour
                 Vector3 targetHorizontal = new Vector3(fleeTargetPoint.x, 0, fleeTargetPoint.z);
 
                 if (Vector3.Distance(horizontalPos, targetHorizontal) < 0.1f)
-                {
                     currentFlyPhase = FlyPhase.GoingDown;
-                }
                 break;
 
             case FlyPhase.GoingDown:
@@ -233,14 +231,10 @@ public class ScreamerAI : MonoBehaviour
                     }
 
                     if (animator != null)
-                    {
-                        animator.SetTrigger("Land");
-                    }
+                        animator.Play(idleAnim);
 
                     if (audioSource != null && landingClip != null)
-                    {
                         audioSource.PlayOneShot(landingClip);
-                    }
 
                     StartCoroutine(ResetScreamAfterDelay(3f));
                 }
@@ -267,27 +261,15 @@ public class ScreamerAI : MonoBehaviour
         hasScreamed = false;
     }
 
-    // ALERT RAKE - FIXED TO WORK WITH RakeBehavior
     private void AlertRake()
     {
-        GameObject rake = GameObject.Find("Rake"); // make sure GameObject is named "Rake"
+        GameObject rake = GameObject.Find("Rake");
 
         if (rake != null)
         {
             RakeBehavior rakeBehavior = rake.GetComponent<RakeBehavior>();
             if (rakeBehavior != null)
-            {
                 rakeBehavior.HeardSound(player.transform.position);
-                Debug.Log("Rake alerted to scream at position: " + player.transform.position);
-            }
-            else
-            {
-                Debug.LogWarning("RakeBehavior component not found on Rake GameObject!");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("No GameObject named 'Rake' found in the scene!");
         }
     }
 
