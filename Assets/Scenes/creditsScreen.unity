@@ -359,9 +359,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ac mollis
-    augue. Sed eu massa massa. In pretium rhoncus neque nec feugiat. Nunc eget nisi
-    elementum sapien cursus mattis. Aenea
+  m_text: 'Producer: Jonathan Story
+
+
+    Designers: Lexx Walker, Matthew Polfer
+
+
+    Artists:
+    Mitchell Fahey, Alexis Stennett
+
+
+    Programmers: Jonathan Story, Adrian Sephien'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -388,14 +396,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 52
+  m_fontSizeBase: 52
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -986,6 +994,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::sceneManager
   sceneName: mainMenuScreen
+  fadeObject: {fileID: 0}
+  fadeImage: {fileID: 0}
+  survivalTip: {fileID: 0}
 --- !u!1 &2123091915
 GameObject:
   m_ObjectHideFlags: 0
