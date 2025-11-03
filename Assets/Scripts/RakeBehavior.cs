@@ -49,7 +49,7 @@ public class RakeBehavior : MonoBehaviour
             }
             else
             {
-                agent.speed = normalSpeed;
+                agent.speed = normalSpeed * 2f; // Running speed
                 agent.SetDestination(player.position);
             }
         }
@@ -60,7 +60,7 @@ public class RakeBehavior : MonoBehaviour
             {
                 isChasing = true;
                 isAlerted = false;
-                agent.speed = normalSpeed;
+                agent.speed = normalSpeed * 2f; // Running speed
                 return;
             }
 
@@ -69,12 +69,12 @@ public class RakeBehavior : MonoBehaviour
             if (distanceToAlertPos <= agent.stoppingDistance)
             {
                 isAlerted = false;
-                agent.speed = normalSpeed;
+                agent.speed = normalSpeed; // Back to walking
                 SetRandomDestination();
             }
             else
             {
-                agent.speed = normalSpeed * 2f;
+                agent.speed = normalSpeed * 2f; // Running toward alert position
                 agent.SetDestination(alertPosition);
             }
         }
@@ -87,15 +87,22 @@ public class RakeBehavior : MonoBehaviour
             }
             else
             {
+                agent.speed = normalSpeed; // Walking speed
                 Patrol();
             }
         }
 
-        // Update walking animation based on agent velocity
+        // Update walking/running animation based on agent velocity
         if (animator != null && agent != null)
         {
             float currentSpeed = agent.velocity.magnitude;
-            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime); // smooth transition
+
+            // Smoothly update Speed parameter (for blend tree)
+            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime);
+
+            // Optional booleans for separate animations
+            animator.SetBool("IsRunning", currentSpeed > normalSpeed * 1.1f);
+            animator.SetBool("IsWalking", currentSpeed > 0.1f && currentSpeed <= normalSpeed * 1.1f);
         }
     }
 
