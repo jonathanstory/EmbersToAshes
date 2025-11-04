@@ -15,6 +15,7 @@ TagManager:
   - BasePos
   - Rake
   - WorldUI
+  - UILookAt
   layers:
   - Default
   - TransparentFX

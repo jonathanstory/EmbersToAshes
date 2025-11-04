@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4178121011826543068}
   - component: {fileID: 4180207633852985820}
   - component: {fileID: 2010443953806833686}
+  - component: {fileID: 6925271945253873168}
   m_Layer: 0
   m_Name: Upgradeable
   m_TagString: WorldUI
@@ -156,6 +157,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6925271945253873168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047612400013226535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f79fd4f39bdd4d459de241a75d19863, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BuildingRotator
 --- !u!1 &3003252133384112676
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +415,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4, y: 0.479}
+  m_AnchoredPosition: {x: 0.03, y: 0.479}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1245244636526010622
@@ -469,7 +482,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 46, y: -50}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5493135376741883898
@@ -946,7 +959,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &7574481079660346605
 MonoBehaviour:
   m_ObjectHideFlags: 0
