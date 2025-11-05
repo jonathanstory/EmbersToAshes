@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: storage_tent
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29491d23fa66cb94da20f8bfa7eb62db, type: 3}
+      propertyPath: m_TagString
+      value: Building
+      objectReference: {fileID: 0}
     - target: {fileID: 1790868808166937211, guid: 29491d23fa66cb94da20f8bfa7eb62db, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -271,6 +275,14 @@ PrefabInstance:
     - target: {fileID: 4591630850559178056, guid: c59fccc9dfa854e4194926b2f718221e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 3.784
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551409539298542576, guid: c59fccc9dfa854e4194926b2f718221e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551409539298542576, guid: c59fccc9dfa854e4194926b2f718221e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 50.04
       objectReference: {fileID: 0}
     - target: {fileID: 7636094323671463846, guid: c59fccc9dfa854e4194926b2f718221e, type: 3}
       propertyPath: m_IsActive

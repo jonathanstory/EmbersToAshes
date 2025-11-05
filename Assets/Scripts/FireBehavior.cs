@@ -18,6 +18,8 @@ public class FireBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        lightBar = GameObject.FindGameObjectWithTag("LightBar").GetComponent<LightBarScript>();
+
         maxFireLife = 1000;
         lightBar.SetMaxHealth(maxFireLife);
         currentFireLife = maxFireLife;

@@ -55,9 +55,8 @@ public class BuildingManager : MonoBehaviour
         { 
             Instantiate(buildings[buildingIndex], this.transform.position, baseDir);
             GameManager.Instance.globalWood -= buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost;
-            StartCoroutine(PlayClips());
 
-           
+            StartCoroutine(PlayClips());
         }
     }
 
@@ -70,7 +69,11 @@ public class BuildingManager : MonoBehaviour
 
             yield return new WaitForSeconds(clip.length);
         }
-        Destroy(gameObject);
+
+        if (transform.parent != null)
+            Destroy(transform.parent.gameObject);
+        else
+            Destroy(gameObject);
     }
 }
  

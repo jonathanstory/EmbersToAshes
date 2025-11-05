@@ -46,4 +46,9 @@ public class BuildingAttributes : MonoBehaviour
             player.GetComponent<CharacterMovementSimple>().canDash = true;
         }
     }
+
+    public void upgraded()
+    {
+            Destroy(gameObject);
+    }
 }

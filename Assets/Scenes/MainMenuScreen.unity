@@ -1820,6 +1820,11 @@ MonoBehaviour:
   globalInventoryCurrent: 0
   currentGlobalWood: {fileID: 0}
   currentGlobalStone: {fileID: 0}
+  activeBuildings:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &802774084
 MonoBehaviour:
   m_ObjectHideFlags: 0

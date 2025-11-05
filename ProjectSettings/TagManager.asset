@@ -16,6 +16,8 @@ TagManager:
   - Rake
   - WorldUI
   - UILookAt
+  - Building
+  - LightBar
   layers:
   - Default
   - TransparentFX
