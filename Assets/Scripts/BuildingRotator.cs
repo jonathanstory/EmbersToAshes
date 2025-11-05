@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class BuildingRotator : MonoBehaviour
 {
@@ -14,6 +15,6 @@ public class BuildingRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(transform.position + UILookAt.forward);
+        transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 }

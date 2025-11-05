@@ -99,4 +99,4 @@ MonoBehaviour:
   affectsFireRate: 0
   affectsHealth: 0
   dashEffect: 0
-  effectPower: 10
+  effectPower: 5

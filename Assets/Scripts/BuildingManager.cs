@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
@@ -56,6 +56,8 @@ public class BuildingManager : MonoBehaviour
             Instantiate(buildings[buildingIndex], this.transform.position, baseDir);
             GameManager.Instance.globalWood -= buildings[buildingIndex].GetComponent<BuildingAttributes>().woodCost;
             StartCoroutine(PlayClips());
+
+           
         }
     }
 

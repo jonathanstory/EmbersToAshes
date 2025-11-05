@@ -105,7 +105,7 @@ MonoBehaviour:
   affectsFireRate: 1
   affectsHealth: 0
   dashEffect: 0
-  effectPower: 10
+  effectPower: 5
 --- !u!114 &7247191984018191170
 MonoBehaviour:
   m_ObjectHideFlags: 0
