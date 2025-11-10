@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.AI;
 
 public class RakeBehavior : MonoBehaviour
@@ -25,6 +26,8 @@ public class RakeBehavior : MonoBehaviour
     private bool patrolPointSet = false;
     private GameObject basePos;
 
+    private bool isFleeing = false;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -48,78 +51,97 @@ public class RakeBehavior : MonoBehaviour
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+        float distanceToBase = Vector3.Distance(transform.position, basePos.transform.position);
 
-        // Chasing logic
-        if (isChasing)
+        if (!isFleeing)
         {
-            if (distanceToPlayer > loseSightRange)
+            // Chasing logic
+            if (isChasing)
             {
-                isChasing = false;
-                animator.SetBool("PlayerFound", false);
-                SetRandomDestination();
+                if (distanceToPlayer > loseSightRange)
+                {
+                    isChasing = false;
+                    animator.SetBool("PlayerFound", false);
+                    SetRandomDestination();
+                }
+                else
+                {
+                    agent.speed = normalSpeed * 2f; // Running speed
+                    agent.SetDestination(player.position);
+                }
             }
+            // Alerted logic
+            else if (isAlerted)
+            {
+                if (distanceToPlayer <= sightRange)
+                {
+                    isChasing = true;
+                    animator.SetBool("PlayerFound", true);
+                    isAlerted = false;
+                    agent.speed = normalSpeed * 2f; // Running speed
+                    return;
+                }
+
+                float distanceToAlertPos = Vector3.Distance(transform.position, alertPosition);
+
+                if (distanceToAlertPos <= agent.stoppingDistance)
+                {
+                    isAlerted = false;
+                    agent.speed = normalSpeed; // Back to walking
+                    SetRandomDestination();
+                }
+                else
+                {
+                    agent.speed = normalSpeed * 2f; // Running toward alert position
+                    agent.SetDestination(alertPosition);
+                }
+            }
+            // Patrol logic
             else
             {
-                agent.speed = normalSpeed * 2f; // Running speed
-                agent.SetDestination(player.position);
+                if (distanceToPlayer <= sightRange)
+                {
+                    isChasing = true;
+                    animator.SetBool("PlayerFound", true);
+                }
+                else
+                {
+                    agent.speed = normalSpeed; // Walking speed
+                    animator.SetBool("PlayerFound", false);
+                    Patrol();
+                }
+            }
+
+            if (animator != null && agent != null)
+            {
+                float currentSpeed = agent.velocity.magnitude;
+
+                if (!isChasing && currentSpeed > .2)
+                    animator.SetBool("Searching", true);
+                else if (!isChasing && currentSpeed <= .2)
+                    animator.SetBool("Searching", false);
+
+                if (isChasing && distanceToPlayer <= 3)
+                    animator.SetBool("Attacking", true);
+                else if (isChasing && distanceToPlayer > 3)
+                    animator.SetBool("Attacking", false);
+            }
+
+            if (distanceToBase < 10.0f)
+            {
+                StartCoroutine(RunAway());
+                isFleeing = true;
             }
         }
-        // Alerted logic
-        else if (isAlerted)
-        {
-            if (distanceToPlayer <= sightRange)
-            {
-                isChasing = true;
-                animator.SetBool("PlayerFound", true);
-                isAlerted = false;
-                agent.speed = normalSpeed * 2f; // Running speed
-                return;
-            }
+    }
 
-            float distanceToAlertPos = Vector3.Distance(transform.position, alertPosition);
-
-            if (distanceToAlertPos <= agent.stoppingDistance)
-            {
-                isAlerted = false;
-                agent.speed = normalSpeed; // Back to walking
-                SetRandomDestination();
-            }
-            else
-            {
-                agent.speed = normalSpeed * 2f; // Running toward alert position
-                agent.SetDestination(alertPosition);
-            }
-        }
-        // Patrol logic
-        else
-        {
-            if (distanceToPlayer <= sightRange)
-            {
-                isChasing = true;
-                animator.SetBool("PlayerFound", true);
-            }
-            else
-            {
-                agent.speed = normalSpeed; // Walking speed
-                animator.SetBool("PlayerFound", false);
-                Patrol();
-            }
-        }
-
-        if (animator != null && agent != null)
-        {
-            float currentSpeed = agent.velocity.magnitude;
-
-            if (!isChasing && currentSpeed > .2)
-                animator.SetBool("Searching", true);
-            else if (!isChasing && currentSpeed <= .2)
-                animator.SetBool("Searching", false);
-
-            if (isChasing && distanceToPlayer <= 3)
-                animator.SetBool("Attacking", true);
-            else if(isChasing && distanceToPlayer > 3)
-                animator.SetBool("Attacking", false);
-        }
+    private IEnumerator RunAway()
+    {
+        Vector3 runPoint = (transform.position - basePos.transform.position).normalized;
+        agent.SetDestination(runPoint * 10);
+        yield return new WaitForSeconds(4);
+        EnemySpawnBehavior.Instance.DespawnEnemy(0);
+        Destroy(gameObject);
     }
 
     private void Patrol()
@@ -134,6 +156,7 @@ public class RakeBehavior : MonoBehaviour
             }
         }
     }
+
 
     private void SetRandomDestination()
     {
