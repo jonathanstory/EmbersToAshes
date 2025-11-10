@@ -34,8 +34,13 @@ public class RakeBehavior : MonoBehaviour
         if (agent != null)
             normalSpeed = agent.speed;
 
+        animator.applyRootMotion = false;
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+
         SetRandomDestination();
         basePos = GameObject.FindGameObjectWithTag("BasePos");
+
     }
 
     void Update()
@@ -48,6 +53,7 @@ public class RakeBehavior : MonoBehaviour
             if (distanceToPlayer > loseSightRange)
             {
                 isChasing = false;
+                animator.SetBool("PlayerFound", false);
                 SetRandomDestination();
             }
             else
@@ -62,6 +68,7 @@ public class RakeBehavior : MonoBehaviour
             if (distanceToPlayer <= sightRange)
             {
                 isChasing = true;
+                animator.SetBool("PlayerFound", true);
                 isAlerted = false;
                 agent.speed = normalSpeed * 2f; // Running speed
                 return;
@@ -87,25 +94,29 @@ public class RakeBehavior : MonoBehaviour
             if (distanceToPlayer <= sightRange)
             {
                 isChasing = true;
+                animator.SetBool("PlayerFound", true);
             }
             else
             {
                 agent.speed = normalSpeed; // Walking speed
+                animator.SetBool("PlayerFound", false);
                 Patrol();
             }
         }
 
-        // Update walking/running animation based on agent velocity
         if (animator != null && agent != null)
         {
             float currentSpeed = agent.velocity.magnitude;
 
-            // Smoothly update Speed parameter (for blend tree)
-            animator.SetFloat("Speed", currentSpeed, 0.1f, Time.deltaTime);
+            if (!isChasing && currentSpeed > .2)
+                animator.SetBool("Searching", true);
+            else if (!isChasing && currentSpeed <= .2)
+                animator.SetBool("Searching", false);
 
-            // Optional booleans for separate animations
-            animator.SetBool("IsRunning", currentSpeed > normalSpeed * 1.1f);
-            animator.SetBool("IsWalking", currentSpeed > 0.1f && currentSpeed <= normalSpeed * 1.1f);
+            if (isChasing && distanceToPlayer <= 3)
+                animator.SetBool("Attacking", true);
+            else if(isChasing && distanceToPlayer > 3)
+                animator.SetBool("Attacking", false);
         }
     }
 

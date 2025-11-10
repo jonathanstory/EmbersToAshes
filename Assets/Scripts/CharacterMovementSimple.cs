@@ -190,4 +190,13 @@ public class CharacterMovementSimple : MonoBehaviour
         yield return new WaitForSeconds(invincibilityTime);
         canDash = true;
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Enemy"))
+        {
+            if (!isInvincible)
+                currentPlayerHealth -= 1;
+        }
+    }
 }
