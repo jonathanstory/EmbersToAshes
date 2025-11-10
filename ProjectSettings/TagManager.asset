@@ -19,6 +19,8 @@ TagManager:
   - Building
   - LightBar
   - Static
+  - LocalW
+  - LocalS
   layers:
   - Default
   - TransparentFX

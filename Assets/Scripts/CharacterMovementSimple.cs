@@ -2,6 +2,8 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using TMPro;
 
 public class CharacterMovementSimple : MonoBehaviour
 {
@@ -36,6 +38,9 @@ public class CharacterMovementSimple : MonoBehaviour
     private float stepTimer = 0f;
     private float stepDelay = .4f;
 
+    public TextMeshProUGUI currentLocalWood;
+    public TextMeshProUGUI currentLocalStone;
+
     public void OnEnable()
     {
         if (controls == null)
@@ -54,6 +59,8 @@ public class CharacterMovementSimple : MonoBehaviour
         homeBase = GameObject.Find("campfire");
         rb = GetComponent<Rigidbody>();
         lightBar.SetMaxHealth(maxPlayerHealth);
+        currentLocalWood = GameObject.FindGameObjectWithTag("LocalW").GetComponent<TextMeshProUGUI>();
+        currentLocalStone = GameObject.FindGameObjectWithTag("LocalS").GetComponent<TextMeshProUGUI>();
     }
 
     private void Awake()
@@ -73,6 +80,9 @@ public class CharacterMovementSimple : MonoBehaviour
         {
             GameManager.Instance.GameOver();
         }
+
+        currentLocalWood.SetText("x " + GameManager.Instance.localWood + "/" + GameManager.Instance.localInventoryMax);
+        currentLocalStone.SetText("x " + GameManager.Instance.localStone + "/" + GameManager.Instance.localInventoryMax);
     }
 
     private void LateUpdate()
