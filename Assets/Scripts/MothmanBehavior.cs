@@ -1,29 +1,44 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class MothmanBehavior : MonoBehaviour
 {
     public Renderer objectRenderer;
-    public GameObject player;
+    private GameObject player;
     public float damageTimer = 5f;
     private float timeSeen = 0;
     public float lifeTime = 15;
     private GameObject enemyManager;
+    public Animator animator;
+    private RawImage staticEffect;
 
     void Start()
     {
+        staticEffect = GameObject.FindGameObjectWithTag("Static").GetComponent<RawImage>();
+        animator.applyRootMotion = false;
         player = GameObject.FindGameObjectWithTag("Player");
         enemyManager = GameObject.FindGameObjectWithTag("EnemyManager");
     }
 
     private void Update()
     {
-        if(objectRenderer.isVisible)
+        float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+
+        if (objectRenderer.isVisible)
         {
             timeSeen += Time.deltaTime;
             Debug.Log("Time Seen: " + timeSeen);
-            
+
+            if(staticEffect != null)
+            {
+                Color c = staticEffect.color;
+                c.a = timeSeen/30f;
+                staticEffect.color = c;
+            }
+
+
             if(timeSeen > 5)
             {
                 player.GetComponent<CharacterMovementSimple>().currentPlayerHealth -= 1;
@@ -44,6 +59,15 @@ public class MothmanBehavior : MonoBehaviour
         }
 
         transform.LookAt(player.transform);
+
+        if(distanceToPlayer <= 15)
+        {
+            animator.SetBool("Pointing", true);
+        }
+        else
+        {
+            animator.SetBool("Pointing", false);
+        }
     }
 
 }

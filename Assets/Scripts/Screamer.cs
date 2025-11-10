@@ -6,7 +6,7 @@ public class ScreamerAI : MonoBehaviour
 {
     [Header("Detection Settings")]
     public float detectionRange = 10f;           // How close the player needs to be for detection
-    public float screamDuration = 7f;            // Duration of scream (should match audio + animation)
+    public float screamDuration = 5f;            // Duration of scream (should match audio + animation)
 
     [Header("Patrol Settings")]
     public float patrolRadius = 20f;             // Radius of map for patrolling points
@@ -24,9 +24,9 @@ public class ScreamerAI : MonoBehaviour
 
     public Animator animator;                     // Animator reference
     public string idleAnim = "Idle";              // Idle animation name
-    public string patrolAnim = "Walk";            // Patrol animation name
-    public string screamAnim = "Scream";          // Scream animation name
-    public string jumpAnim = "Jump";              // Jump/fly animation name
+    public string patrolAnim = "Walking";            // Patrol animation name
+    public string screamAnim = "Screaming";          // Scream animation name
+    public string jumpAnim = "Jumping";              // Jump/fly animation name
 
     private GameObject player;
     private NavMeshAgent agent;
@@ -61,6 +61,12 @@ public class ScreamerAI : MonoBehaviour
         if (animator == null)
             animator = GetComponent<Animator>();
 
+        animator.applyRootMotion = false;
+        agent.updatePosition = true;
+        agent.updateRotation = true;
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+
+
         SetRandomPatrolPoint();
     }
 
@@ -72,11 +78,22 @@ public class ScreamerAI : MonoBehaviour
 
             if (distanceToPlayer <= detectionRange && !hasScreamed)
             {
+                animator.SetBool("PlayerFound", true);
                 StartCoroutine(ScreamAndFlyAway());
             }
             else
             {
                 Patrol();
+            }
+
+            if (animator != null)
+            {
+                float speedPercent = agent.velocity.magnitude / agent.speed;
+
+                if (speedPercent > 0.1f)
+                    animator.SetBool("Walking", true);
+                else
+                    animator.SetBool("Walking", false);
             }
         }
         else
@@ -93,17 +110,6 @@ public class ScreamerAI : MonoBehaviour
         if (agent != null && patrolPointSet)
         {
             agent.SetDestination(patrolPoint);
-
-            // Animate patrol vs idle
-            if (animator != null)
-            {
-                float speedPercent = agent.velocity.magnitude / agent.speed;
-
-                if (speedPercent > 0.1f)
-                    animator.Play(patrolAnim);
-                else
-                    animator.Play(idleAnim);
-            }
 
             if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance + 0.1f)
             {
@@ -134,6 +140,7 @@ public class ScreamerAI : MonoBehaviour
     {
         hasScreamed = true;
         isFlying = true;
+        animator.SetBool("PlayerFound", true);
 
         if (agent != null)
         {
@@ -148,16 +155,14 @@ public class ScreamerAI : MonoBehaviour
             animator.Play(screamAnim);
 
         AlertRake();
-
         yield return new WaitForSeconds(screamDuration);
 
         animator.SetBool("Jumping", true);
+        animator.SetBool("PlayerFound", false);
 
         yield return new WaitForSeconds(1);
 
         currentFlyPhase = FlyPhase.GoingUp;
-        if (animator != null)
-            animator.Play(jumpAnim);
     }
 
 
@@ -277,6 +282,7 @@ public class ScreamerAI : MonoBehaviour
             if (rakeBehavior != null)
                 rakeBehavior.HeardSound(player.transform.position);
         }
+
     }
 
 #if UNITY_EDITOR

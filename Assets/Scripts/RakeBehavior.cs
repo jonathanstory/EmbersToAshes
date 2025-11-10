@@ -37,9 +37,11 @@ public class RakeBehavior : MonoBehaviour
         animator.applyRootMotion = false;
         agent.updatePosition = true;
         agent.updateRotation = true;
+        agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
+        basePos = GameObject.FindGameObjectWithTag("BasePos");
 
         SetRandomDestination();
-        basePos = GameObject.FindGameObjectWithTag("BasePos");
+
 
     }
 
