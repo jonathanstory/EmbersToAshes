@@ -13,11 +13,12 @@ public class PlayerStats : MonoBehaviour
     public int baseStartingWood = 0;
     public int baseStartingStone = 0;
     public float baseStealth = 1.2f;
+    public int embers;
 
     private void Start()
     {
-        if(!PlayerPrefs.HasKey("MaxHP"))
-        {
+        //if(!PlayerPrefs.HasKey("MaxHP"))
+        //{
             PlayerPrefs.SetInt("MaxHP", baseHealth);
             PlayerPrefs.SetFloat("DashCooldown", baseDashCooldown);
             PlayerPrefs.SetInt("InventoryMax", baseInventoryMax);
@@ -26,10 +27,11 @@ public class PlayerStats : MonoBehaviour
             PlayerPrefs.SetInt("StartingWood", baseStartingWood);
             PlayerPrefs.SetInt("StartingStone", baseStartingStone);
             PlayerPrefs.SetFloat("Stealth", baseStealth);
+            PlayerPrefs.SetInt("Embers", 0);
             PlayerPrefs.Save();
 
             Debug.Log("Keys Created");
-        }
+        //}
     }
 
 
@@ -78,6 +80,12 @@ public class PlayerStats : MonoBehaviour
     public void ApplyStealthUpgrade(float value)
     {
         PlayerPrefs.SetFloat("Stealth", baseStealth - value);
+        PlayerPrefs.Save();
+    }
+
+    public void AddEmbers(int value)
+    {
+        PlayerPrefs.SetInt("Embers", PlayerPrefs.GetInt("Embers") + value);
         PlayerPrefs.Save();
     }
 }

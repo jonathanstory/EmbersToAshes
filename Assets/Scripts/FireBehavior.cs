@@ -24,6 +24,8 @@ public class FireBehavior : MonoBehaviour
         lightBar.SetMaxHealth(maxFireLife);
         currentFireLife = maxFireLife;
         fireLight.spotAngle = maxRange;
+
+        rateOfDecay = PlayerPrefs.GetFloat("FireBurnRate");
     }
 
     // Update is called once per frame
@@ -48,7 +50,7 @@ public class FireBehavior : MonoBehaviour
     {
         if(GameManager.Instance.localWood > 0)
         {
-            currentFireLife += 250;
+            currentFireLife += PlayerPrefs.GetFloat("FireAddValue");
             GameManager.Instance.localWood -= 1;
         }
     }

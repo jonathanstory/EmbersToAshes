@@ -66,6 +66,8 @@ public class CharacterMovementSimple : MonoBehaviour
         currentLocalStone = GameObject.FindGameObjectWithTag("LocalS").GetComponent<TextMeshProUGUI>();
 
         maxPlayerHealth = PlayerPrefs.GetInt("MaxHP");
+        dashCooldown = PlayerPrefs.GetFloat("DashCooldown");
+
 
         currentPlayerHealth = maxPlayerHealth;
         animator = GetComponent<Animator>();
