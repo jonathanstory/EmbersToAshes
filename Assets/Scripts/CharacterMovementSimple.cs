@@ -28,6 +28,7 @@ public class CharacterMovementSimple : MonoBehaviour
     private Quaternion rotation;
     private bool isPaused;
     private bool isInvincible;
+    public bool isDashing;
 
     private Rigidbody rb;
 
@@ -96,6 +97,8 @@ public class CharacterMovementSimple : MonoBehaviour
         {
             animator.SetBool("IsMoving", true);
         }
+
+        isDashing = animator.GetBool("IsDashing");
 
         currentLocalWood.SetText("x " + GameManager.Instance.localWood + "/" + GameManager.Instance.localInventoryMax);
         currentLocalStone.SetText("x " + GameManager.Instance.localStone + "/" + GameManager.Instance.localInventoryMax);
@@ -175,15 +178,19 @@ public class CharacterMovementSimple : MonoBehaviour
                 currentPlayerHealth -= 1;
         }
 
-        if(other.gameObject.CompareTag("Wood"))
+        if(other.gameObject.CompareTag("Wood") && !isDashing)
         {
-            if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
-            GameManager.Instance.localWood += 1;
+            animator.SetTrigger("Pickup");
+
+            if (GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
+                GameManager.Instance.localWood += 1;
         }
-        if(other.gameObject.CompareTag("Stone"))
+        if(other.gameObject.CompareTag("Stone") && !isDashing)
         {
-            if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
-            GameManager.Instance.localStone += 1;
+            animator.SetTrigger("Pickup");
+
+            if (GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
+                GameManager.Instance.localStone += 1;
         }
 
         if (other.gameObject.CompareTag("Base"))
@@ -212,7 +219,9 @@ public class CharacterMovementSimple : MonoBehaviour
     private IEnumerator DashTimer()
     {
         moveSpeed *= 2;
+        animator.SetBool("IsDashing", true);
         yield return new WaitForSeconds(0.3f);
+        animator.SetBool("IsDashing", false);
         moveSpeed /= 2;
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;

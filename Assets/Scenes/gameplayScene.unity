@@ -1540,6 +1540,7 @@ MonoBehaviour:
   moveSpeed: 5
   invincibilityTime: 2
   lightBar: {fileID: 1331244590}
+  isDashing: 0
   audioSource: {fileID: 223888055}
   clips:
   - {fileID: 8300000, guid: 6c1abb528ab90ad4286eb56c322d3924, type: 3}
@@ -7548,7 +7549,7 @@ Transform:
   m_GameObject: {fileID: 1204842036}
   serializedVersion: 2
   m_LocalRotation: {x: 0.43447527, y: 0, z: 0, w: 0.90068376}
-  m_LocalPosition: {x: 1.18, y: 10.6189995, z: -19.999186}
+  m_LocalPosition: {x: 1.55, y: 10.6189995, z: -19.999186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8179,7 +8180,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: ffe93c06ca1b8fa438897ca556b5ec7b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.18
+      value: 1.55
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ffe93c06ca1b8fa438897ca556b5ec7b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8990,7 +8991,7 @@ Transform:
   m_GameObject: {fileID: 1372927703}
   serializedVersion: 2
   m_LocalRotation: {x: 0.43447527, y: 0, z: 0, w: 0.90068376}
-  m_LocalPosition: {x: 1.18, y: 10.6189995, z: -19.999186}
+  m_LocalPosition: {x: 1.55, y: 10.6189995, z: -19.999186}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16753,7 +16754,7 @@ VisualEffect:
       - m_Value: {x: 0, y: 2, z: 0}
         m_Name: Pos 2
         m_Overridden: 1
-      - m_Value: {x: 1.2049929, y: -1.8591797, z: 5.4673634}
+      - m_Value: {x: 0.83499277, y: -1.8591799, z: 5.4673634}
         m_Name: Pos 3
         m_Overridden: 1
     m_Vector4f:
