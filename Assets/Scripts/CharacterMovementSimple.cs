@@ -181,6 +181,7 @@ public class CharacterMovementSimple : MonoBehaviour
         if(other.gameObject.CompareTag("Wood") && !isDashing)
         {
             animator.SetTrigger("Pickup");
+            StartCoroutine(PickUpTime());
 
             if (GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
                 GameManager.Instance.localWood += 1;
@@ -188,6 +189,7 @@ public class CharacterMovementSimple : MonoBehaviour
         if(other.gameObject.CompareTag("Stone") && !isDashing)
         {
             animator.SetTrigger("Pickup");
+            StartCoroutine(PickUpTime());
 
             if (GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
                 GameManager.Instance.localStone += 1;
@@ -234,5 +236,14 @@ public class CharacterMovementSimple : MonoBehaviour
             if (!isInvincible)
                 currentPlayerHealth -= 1;
         }
+    }
+
+    private IEnumerator PickUpTime()
+    {
+        playerInput.enabled = false;
+        yield return new WaitForSeconds(0.1f);
+        movement = Vector3.zero;
+        yield return new WaitForSeconds(1.5f);
+        playerInput.enabled = true;
     }
 }
