@@ -11,6 +11,8 @@ public class CharacterMovementSimple : MonoBehaviour
     public float maxLightRange;
     public float rotationSpeed;
     public bool canDash = false;
+    public float dashCooldown;
+    private Animator animator;
 
     public Light playerLight;
     public Light playerLightOrigin;
@@ -61,6 +63,11 @@ public class CharacterMovementSimple : MonoBehaviour
         lightBar.SetMaxHealth(maxPlayerHealth);
         currentLocalWood = GameObject.FindGameObjectWithTag("LocalW").GetComponent<TextMeshProUGUI>();
         currentLocalStone = GameObject.FindGameObjectWithTag("LocalS").GetComponent<TextMeshProUGUI>();
+
+        maxPlayerHealth = PlayerPrefs.GetInt("MaxHP");
+
+        currentPlayerHealth = maxPlayerHealth;
+        animator = GetComponent<Animator>();
     }
 
     private void Awake()
@@ -72,7 +79,7 @@ public class CharacterMovementSimple : MonoBehaviour
     private void Update()
     {
         playerLight.spotAngle = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
-        playerLightOrigin.intensity = maxLightRange *((float)currentPlayerHealth / (float)maxPlayerHealth);
+        playerLightOrigin.intensity = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
 
         lightBar.SetHealth(currentPlayerHealth);
 
@@ -81,8 +88,18 @@ public class CharacterMovementSimple : MonoBehaviour
             GameManager.Instance.GameOver();
         }
 
+        if (movement == Vector3.zero)
+        {
+            animator.SetBool("IsMoving", false);
+        }
+        else
+        {
+            animator.SetBool("IsMoving", true);
+        }
+
         currentLocalWood.SetText("x " + GameManager.Instance.localWood + "/" + GameManager.Instance.localInventoryMax);
         currentLocalStone.SetText("x " + GameManager.Instance.localStone + "/" + GameManager.Instance.localInventoryMax);
+
     }
 
     private void LateUpdate()
@@ -197,7 +214,7 @@ public class CharacterMovementSimple : MonoBehaviour
         moveSpeed *= 2;
         yield return new WaitForSeconds(0.3f);
         moveSpeed /= 2;
-        yield return new WaitForSeconds(invincibilityTime);
+        yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
 

@@ -6,40 +6,48 @@ public class UpgradeManager : MonoBehaviour
 
     public void UpgradeHealth(int level)
     {
-        float[] values = {0.05f, 0.10f, 0.15f};
+        int[] values = {1, 2, 3};
         stats.ApplyHealthUpgrade(values[level]);
     }
 
-    public void UpgradeMoveSpeed(int level)
+    public void UpgradeDashCooldown(int level)
     {
-        float[] values = {0.05f, 0.07f, 0.10f};
-        stats.ApplyMoveSpeedUpgrade(values[level]);
+        float[] values = {0.2f, 0.3f, 0.4f};
+        stats.ApplyDashCooldownUpgrade(values[level]);
     }
 
     public void UpgradeInventory()
     {
-        stats.ApplyInventoryUpgrade(4);
+        stats.ApplyInventoryUpgrade(2);
     }
 
     public void UpgradeFireBurnRate(int level)
     {
-        float[] values = {0.03f, 0.05f, 0.08f};
+        float[] values = {2.5f, 3.5f, 5f};
         stats.ApplyFireBurnRateUpgrade(values[level]);
     }
 
     public void UpgradeFireAddValue(int level)
     {
-        float[] values = {0.03f, 0.05f, 0.08f};
+        float[] values = {10f, 20f, 30f};
         stats.ApplyFireAddValueUpgrade(values[level]);
     }
 
-    public void UpgradeStartingResources()
+    public void UpgradeStartingWood(int level)
     {
-        stats.ApplyStartingResources(2, 2);
+        int[] values = { 1, 2, 3 };
+        stats.ApplyStartingWoodUpgrade(values[level]);
     }
 
-    public void UpgradeStealth()
+    public void UpgradeStartingStone(int level)
     {
-        stats.ApplyStealthUpgrade(0.03f);
+        int[] values = { 1, 2, 3 };
+        stats.ApplyStartingStoneUpgrade(values[level]);
+    }
+
+    public void UpgradeStealth(int level)
+    {
+        float[] values = { 0.1f, 0.15f, 0.2f };
+        stats.ApplyStealthUpgrade(values[level]);
     }
 }

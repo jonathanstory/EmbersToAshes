@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // Persist across scene changes
 
             ResetGame();
+            SetPlayerStats();
         }
     }
 
@@ -83,5 +84,13 @@ public class GameManager : MonoBehaviour
         globalWood = 0;
         globalStone = 0;
         timeSurvived = 0;
+    }
+
+    public void SetPlayerStats()
+    {
+        localInventoryMax = 5;
+        localInventoryCurrent = 0;
+        globalInventoryMax = 5;
+        globalInventoryCurrent = 0;
     }
 }
