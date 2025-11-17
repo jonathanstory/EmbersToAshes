@@ -9,8 +9,8 @@ public class RakeBehavior : MonoBehaviour
     public float waitTimeAtPoint = 2f;    // Time to wait at each patrol point
 
     [Header("Chase Settings")]
-    public float sightRange = 5f;         // Distance to start chasing the player
-    public float loseSightRange = 8f;     // Distance to stop chasing the player
+    public float sightRange = 10f;         // Distance to start chasing the player
+    public float loseSightRange = 12f;     // Distance to stop chasing the player
     public float baseAvoidDistance = 10f;
 
     private NavMeshAgent agent;
@@ -42,6 +42,9 @@ public class RakeBehavior : MonoBehaviour
         agent.updateRotation = true;
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
         basePos = GameObject.FindGameObjectWithTag("BasePos");
+
+        sightRange = 10f * PlayerPrefs.GetFloat("Stealth");
+        loseSightRange = 12f * PlayerPrefs.GetFloat("Stealth");
 
         SetRandomDestination();
 

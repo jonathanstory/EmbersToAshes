@@ -49,9 +49,6 @@ public class GameManager : MonoBehaviour
             currentGlobalWood.SetText("x " + globalWood.ToString() + "/" + globalInventoryMax);
             currentGlobalStone.SetText("x " + globalStone.ToString() + "/" + globalInventoryMax);
         }
-
-        Debug.Log("LocalMax: " + localInventoryMax);
-        Debug.Log("GlobalMax: " + globalInventoryMax);
     }
 
     public void GameOver()

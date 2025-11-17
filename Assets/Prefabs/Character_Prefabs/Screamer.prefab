@@ -458,7 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c022cf5565d444a99c430382df5c62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScreamerAI
-  detectionRange: 7
+  detectionRange: 10
   screamDuration: 7
   patrolRadius: 20
   waitTimeAtPoint: 4
