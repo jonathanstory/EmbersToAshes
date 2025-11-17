@@ -1,14 +1,8 @@
 <!-- UNITY CODE ASSIST INSTRUCTIONS START -->
 - Project name: EmbersToAshes
-- Unity version: Unity 6000.2.0f1
-- Active scene:
-  - Name: gameplayScene
-  - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Ground, Enemy, Wood, Base, WoodUI, StoneUI, Stone, EnemyManager
-  - Layers:
-    - Default, TransparentFX, Ignore Raycast, Water, UI
+- Unity version: Unity 6000.0.62f1
 - Active game object:
-  - Name: screamer_combined@Mutant Breathing Idle
+  - Name: Upgrade Pips Bar
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
