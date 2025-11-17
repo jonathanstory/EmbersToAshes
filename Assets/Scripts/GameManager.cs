@@ -54,12 +54,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene("gameOverScreen");
-    }
-
-    public void GameWin()
-    {
-        ResetGame();
-        SceneManager.LoadScene("winScreen");
+        emberCount.AddEmbers((int)Mathf.Round((timeSurvived / 2)));
     }
 
     public void InventoryConvert()
@@ -77,8 +72,6 @@ public class GameManager : MonoBehaviour
     
     public void ResetGame()
     {
-        emberCount.AddEmbers((int)timeSurvived);
-
         localWood = PlayerPrefs.GetInt("StartingWood");
         localStone = PlayerPrefs.GetInt("StartingStone");
         globalWood = 0;

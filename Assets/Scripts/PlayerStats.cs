@@ -88,4 +88,6 @@ public class PlayerStats : MonoBehaviour
         PlayerPrefs.SetInt("Embers", PlayerPrefs.GetInt("Embers") + value);
         PlayerPrefs.Save();
     }
+
+
 }

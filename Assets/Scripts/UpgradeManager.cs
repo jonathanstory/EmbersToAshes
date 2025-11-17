@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class UpgradeManager : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    public TextMeshProUGUI embers;
     public GameObject[] buttons;
 
     public void SelectPurchase(int index)
@@ -54,41 +55,6 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    public void SelectDash()
-    {
-
-    }
-
-    public void SelectStealth()
-    {
-
-    }
-
-    public void SelectInventory()
-    {
-
-    }
-
-    public void SelectBurnRate()
-    {
-
-    }
-
-    public void SelectFuelValue()
-    {
-
-    }
-
-    public void SelectWoodSupply()
-    {
-
-    }
-
-    public void SelectStoneSupply()
-    {
-
-    }
-
     public void UpgradeHealth(int level)
     {
         int[] values = {1, 2, 3};
@@ -134,5 +100,10 @@ public class UpgradeManager : MonoBehaviour
     {
         float[] values = { 0.1f, 0.15f, 0.2f };
         PlayerStats.Instance.ApplyStealthUpgrade(values[level]);
+    }
+
+    private void Update()
+    {
+        embers.SetText(PlayerPrefs.GetInt("Embers").ToString());
     }
 }
