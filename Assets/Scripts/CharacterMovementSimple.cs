@@ -176,8 +176,11 @@ public class CharacterMovementSimple : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Rake"))
         {
-            if(!isInvincible)
+            if (!isInvincible)
+            {
                 currentPlayerHealth -= 1;
+                ActivateInvincibility();
+            }
         }
 
         if(other.gameObject.CompareTag("Wood") && !isDashing)
