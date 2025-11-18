@@ -66,7 +66,6 @@ public class ScreamerAI : MonoBehaviour
         agent.updateRotation = true;
         agent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
-        detectionRange = 8 * PlayerPrefs.GetFloat("Stealth");
 
         SetRandomPatrolPoint();
     }

@@ -48,9 +48,6 @@ public class MothmanBehavior : MonoBehaviour
         else
         {
             timeSeen = 0;
-            Color c = staticEffect.color;
-            c.a = 0f;
-            staticEffect.color = c;
         }
 
         lifeTime -= Time.deltaTime;

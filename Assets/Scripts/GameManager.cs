@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
     public int globalInventoryCurrent;
     public static GameManager Instance { get; private set; }
 
-    public PlayerStats emberCount;
-
     public TextMeshProUGUI currentGlobalWood;
     public TextMeshProUGUI currentGlobalStone;
 
@@ -34,7 +32,6 @@ public class GameManager : MonoBehaviour
             DontDestroyOnLoad(gameObject); // Persist across scene changes
 
             ResetGame();
-            SetPlayerStats();
         }
     }
 
@@ -77,20 +74,14 @@ public class GameManager : MonoBehaviour
     
     public void ResetGame()
     {
-        emberCount.AddEmbers((int)timeSurvived);
-
-        localWood = PlayerPrefs.GetInt("StartingWood");
-        localStone = PlayerPrefs.GetInt("StartingStone");
+        localInventoryMax = 5;
+        localInventoryCurrent = 0;
+        globalInventoryMax = 5;
+        globalInventoryCurrent = 0;
+        localWood = 0;
+        localStone = 0;
         globalWood = 0;
         globalStone = 0;
         timeSurvived = 0;
-    }
-
-    public void SetPlayerStats()
-    {
-        localInventoryMax = PlayerPrefs.GetInt("InventoryMax");
-        localInventoryCurrent = 0;
-        globalInventoryMax = PlayerPrefs.GetInt("InventoryMax");
-        globalInventoryCurrent = 0;
     }
 }

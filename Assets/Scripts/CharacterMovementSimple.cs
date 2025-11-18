@@ -11,8 +11,6 @@ public class CharacterMovementSimple : MonoBehaviour
     public float maxLightRange;
     public float rotationSpeed;
     public bool canDash = false;
-    public float dashCooldown;
-    private Animator animator;
 
     public Light playerLight;
     public Light playerLightOrigin;
@@ -28,7 +26,6 @@ public class CharacterMovementSimple : MonoBehaviour
     private Quaternion rotation;
     private bool isPaused;
     private bool isInvincible;
-    public bool isDashing;
 
     private Rigidbody rb;
 
@@ -64,13 +61,6 @@ public class CharacterMovementSimple : MonoBehaviour
         lightBar.SetMaxHealth(maxPlayerHealth);
         currentLocalWood = GameObject.FindGameObjectWithTag("LocalW").GetComponent<TextMeshProUGUI>();
         currentLocalStone = GameObject.FindGameObjectWithTag("LocalS").GetComponent<TextMeshProUGUI>();
-
-        maxPlayerHealth = PlayerPrefs.GetInt("MaxHP");
-        dashCooldown = PlayerPrefs.GetFloat("DashCooldown");
-
-
-        currentPlayerHealth = maxPlayerHealth;
-        animator = GetComponent<Animator>();
     }
 
     private void Awake()
@@ -82,7 +72,7 @@ public class CharacterMovementSimple : MonoBehaviour
     private void Update()
     {
         playerLight.spotAngle = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
-        playerLightOrigin.intensity = maxLightRange * ((float)currentPlayerHealth / (float)maxPlayerHealth);
+        playerLightOrigin.intensity = maxLightRange *((float)currentPlayerHealth / (float)maxPlayerHealth);
 
         lightBar.SetHealth(currentPlayerHealth);
 
@@ -91,20 +81,8 @@ public class CharacterMovementSimple : MonoBehaviour
             GameManager.Instance.GameOver();
         }
 
-        if (movement == Vector3.zero)
-        {
-            animator.SetBool("IsMoving", false);
-        }
-        else
-        {
-            animator.SetBool("IsMoving", true);
-        }
-
-        isDashing = animator.GetBool("IsDashing");
-
         currentLocalWood.SetText("x " + GameManager.Instance.localWood + "/" + GameManager.Instance.localInventoryMax);
         currentLocalStone.SetText("x " + GameManager.Instance.localStone + "/" + GameManager.Instance.localInventoryMax);
-
     }
 
     private void LateUpdate()
@@ -176,28 +154,19 @@ public class CharacterMovementSimple : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Rake"))
         {
-            if (!isInvincible)
-            {
+            if(!isInvincible)
                 currentPlayerHealth -= 1;
-                ActivateInvincibility();
-            }
         }
 
-        if(other.gameObject.CompareTag("Wood") && !isDashing)
+        if(other.gameObject.CompareTag("Wood"))
         {
-            animator.SetTrigger("Pickup");
-            StartCoroutine(PickUpTime());
-
-            if (GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
-                GameManager.Instance.localWood += 1;
+            if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
+            GameManager.Instance.localWood += 1;
         }
-        if(other.gameObject.CompareTag("Stone") && !isDashing)
+        if(other.gameObject.CompareTag("Stone"))
         {
-            animator.SetTrigger("Pickup");
-            StartCoroutine(PickUpTime());
-
-            if (GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
-                GameManager.Instance.localStone += 1;
+            if(GameManager.Instance.localInventoryCurrent < GameManager.Instance.localInventoryMax)
+            GameManager.Instance.localStone += 1;
         }
 
         if (other.gameObject.CompareTag("Base"))
@@ -226,11 +195,9 @@ public class CharacterMovementSimple : MonoBehaviour
     private IEnumerator DashTimer()
     {
         moveSpeed *= 2;
-        animator.SetBool("IsDashing", true);
         yield return new WaitForSeconds(0.3f);
-        animator.SetBool("IsDashing", false);
         moveSpeed /= 2;
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSeconds(invincibilityTime);
         canDash = true;
     }
 
@@ -241,14 +208,5 @@ public class CharacterMovementSimple : MonoBehaviour
             if (!isInvincible)
                 currentPlayerHealth -= 1;
         }
-    }
-
-    private IEnumerator PickUpTime()
-    {
-        playerInput.enabled = false;
-        yield return new WaitForSeconds(0.1f);
-        movement = Vector3.zero;
-        yield return new WaitForSeconds(1.5f);
-        playerInput.enabled = true;
     }
 }

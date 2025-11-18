@@ -19,13 +19,9 @@ public class LogBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player"))
         {
-            CharacterMovementSimple player = collision.gameObject.GetComponent<CharacterMovementSimple>();
-
-            if(player != null)
-                if (player.isDashing == false)
-                    StartCoroutine(pickup());
+            StartCoroutine(pickup());
         }
     }
 
