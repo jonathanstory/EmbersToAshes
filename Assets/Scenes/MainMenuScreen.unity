@@ -2575,6 +2575,7 @@ GameObject:
   - component: {fileID: 802774082}
   - component: {fileID: 802774083}
   - component: {fileID: 802774084}
+  - component: {fileID: 802774085}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2618,6 +2619,7 @@ MonoBehaviour:
   globalStone: 0
   globalWood: 0
   globalInventoryCurrent: 0
+  emberCount: {fileID: 802774085}
   currentGlobalWood: {fileID: 0}
   currentGlobalStone: {fileID: 0}
 --- !u!114 &802774084
@@ -2636,6 +2638,27 @@ MonoBehaviour:
   fadeObject: {fileID: 0}
   fadeImage: {fileID: 0}
   survivalTip: {fileID: 0}
+--- !u!114 &802774085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802774081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbd2bf5d923dd549b7b8e10cc36362d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseHealth: 3
+  baseDashCooldown: 2
+  baseInventoryMax: 5
+  baseFireBurnRate: 25
+  baseFireAddValue: 250
+  baseStartingWood: 0
+  baseStartingStone: 0
+  baseStealth: 1.2
+  embers: 0
 --- !u!1001 &819494996
 PrefabInstance:
   m_ObjectHideFlags: 0
