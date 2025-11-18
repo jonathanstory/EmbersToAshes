@@ -49,6 +49,8 @@ public class GameManager : MonoBehaviour
             currentGlobalWood.SetText("x " + globalWood.ToString() + "/" + globalInventoryMax);
             currentGlobalStone.SetText("x " + globalStone.ToString() + "/" + globalInventoryMax);
         }
+
+        Debug.Log(PlayerPrefs.GetInt("MaxHPCount"));
     }
 
     public void GameOver()
