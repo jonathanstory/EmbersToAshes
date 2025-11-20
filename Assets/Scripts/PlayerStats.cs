@@ -30,6 +30,9 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
+
+        if (!PlayerPrefs.HasKey("MaxHP"))
+        {
             PlayerPrefs.SetInt("MaxHP", baseHealth);
             PlayerPrefs.SetFloat("DashCooldown", baseDashCooldown);
             PlayerPrefs.SetInt("InventoryMax", baseInventoryMax);
@@ -50,6 +53,7 @@ public class PlayerStats : MonoBehaviour
             PlayerPrefs.Save();
 
             Debug.Log("Keys Created");
+        }
     }
 
 

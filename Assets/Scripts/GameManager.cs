@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject); // Persist across scene changes
-
             ResetGame();
             SetPlayerStats();
         }
@@ -55,8 +54,9 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        PlayerPrefs.SetInt("Embers", PlayerPrefs.GetInt("Embers") + (int)(timeSurvived / 2));
+        PlayerPrefs.Save();
         SceneManager.LoadScene("gameOverScreen");
-        emberCount.AddEmbers((int)Mathf.Round((timeSurvived / 2)));
     }
 
     public void InventoryConvert()
